@@ -1,15 +1,15 @@
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Test;
+import java.util.HashMap;
 
-import java.util.*;
+import org.junit.jupiter.api.Test;
 
 class createInvoiceTest {
 
 	@Test
-	void test1() {
-		System system = new System();
-		Map<Integer, Integer> ordered_products_1 = new HashMap<>();
+	void test() {
+		Our_System system = new Our_System();
+		HashMap<Integer, Integer> ordered_products_1 = new HashMap<>();
 		ordered_products_1.put(1, 1);
 		/*
 		ordered_products_1.put(2, 2);
@@ -19,6 +19,7 @@ class createInvoiceTest {
 		ordered_products_1.put(6, 1);
 		*/
 		Invoice invoice = system.createInvoice(0, 0, ordered_products_1, 0);
+		//System.out.println()
 		invoice.printInvoice();
 	}
 

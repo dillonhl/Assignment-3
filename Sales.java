@@ -1,6 +1,8 @@
+import java.lang.*;
+
 public class Sales {
     int productID;
-    string productName;
+    String productName;
     float sellingPrice;
     float retailPrice;
     float unitprofit;
@@ -10,7 +12,7 @@ public class Sales {
     float totalProfit;
     float totalProfitPercent;
 
-	string getProductName(){
+	String getProductName(){
 		return this.productName;
 	}
 
@@ -22,7 +24,7 @@ public class Sales {
 		return this.retailPrice;
 	}
 
-	integer getQuantitySold(){
+	int getQuantitySold(){
 		return this.quantitySold;
 	}
 

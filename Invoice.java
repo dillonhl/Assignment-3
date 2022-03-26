@@ -1,5 +1,7 @@
 import java.sql.Date;
 import java.util.*;
+import java.io.*;
+import java.lang.System;
 
 public class Invoice {
     private int invoice_id;
@@ -21,8 +23,10 @@ public class Invoice {
     float discount; 
     float finance_charge;
     
-    void Invoice(int cust_ID, int salesprsn_ID) {
-    	
+    Invoice(int cust_ID, int salesprsn_ID, HashMap<Integer,Integer> product_orders) {
+    	this.customer_id = cust_ID;
+    	this.salesperson_id = salesprsn_ID;
+    	this.ordered_products = product_orders;
     }
 
     void addProduct(int productID, int quantity_ordered){
@@ -50,17 +54,19 @@ public class Invoice {
     }
 
     void printInvoice(){
-
+    	System.out.println(this.customer_id);
+    	System.out.println(this.salesperson_id);
+    	System.out.println(this.ordered_products);
     }
 
     void saveInvoice(){
 
     }
-
+/*
     float calcCommission(){
 
     }
-
+*/
     void updateInvoice(float payment){
         
     }
@@ -72,11 +78,11 @@ public class Invoice {
     void addDiscount(){
 
     }
-
+/*
     Date getInvoiceClosedData(){
 
     }
-
+*/
     void addFinanceCharge(float financeCharge){
         
     }

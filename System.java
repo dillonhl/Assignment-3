@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class System {
     String password;
     
@@ -18,15 +20,16 @@ public class System {
     }
 
     Customer searchCustomer(String name){
-
+    	//return Customer with that name
     }
 
     void createCustomer(String address, String phone, float salesTax){
 
     }
 
-    void createInvoice(int customer_id, int salesperson_id){
-
+    Invoice createInvoice(int customer_id, int salesperson_id, Map<Integer, Integer> ordered_products, int delivery){
+    	Invoice invoice = new Invoice(customer_id, salesperson_id);
+    	//more stuff.
     }
 
     void addSalesperson(){

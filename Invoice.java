@@ -1,5 +1,5 @@
 import java.sql.Date;
-import java.util.List;
+import java.util.*;
 
 public class Invoice {
     private int invoice_id;
@@ -11,15 +11,19 @@ public class Invoice {
     private String customer_name;
     private String customer_address;
     private Float salesTaxPercent;
-    private List<Pair<Integer,Integer>> ordered_products;
+    private HashMap<Integer,Integer> ordered_products;
     float delivery_charge;
     int totalQuantity;
     float pretax_sales_total;
     float sales_tax_amount;
     float total_amount;
-    float remainng_balance;
+    float remaining_balance;
     float discount; 
     float finance_charge;
+    
+    void Invoice(int cust_ID, int salesprsn_ID) {
+    	
+    }
 
     void addProduct(int productID, int quantity_ordered){
 

@@ -13,5 +13,4 @@ class InventoryLookupTest {
 		Store_System system = new Store_System();
 		system.displayProducts();
 	}
-
 }

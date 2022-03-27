@@ -67,10 +67,29 @@ public class Invoice {
     	//System.out.println(this.ordered_products);
     	for(Map.Entry<Integer, Integer> entry : this.ordered_products.entrySet()) {
     		int product_id = entry.getKey();
-    		String [] product = find_product(product_id);
+    		//String [] product = find_product(product_id);
+    		String[] product = null;
+    		try {
+        		String line = ""; String splitBy = ",";
+    			BufferedReader br = new BufferedReader(new FileReader("Product_List.csv"));
+    			br.readLine();
+    			//List<String> found_product = Collections.emptyList();
+    			while ((line = br.readLine()) != null){  
+    				product = line.split(splitBy);
+    				//System.out.println("Product [ID = " + product[0] + ", Name = " + product[1] + "]");
+    				if (product[0] == String.valueOf(product_id)) {
+    					break;
+    				}
+    			}
+    			br.close();
+    			//return found_product;
+        	} catch (Exception e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
     		int ordered_quantity = entry.getValue();
     		System.out.println("Product_ID = " + product_id +
-    				"Product_Name = " + product[1] +
+    				", Product_Name = " + product[1] +
     				", Warehouse # = " + product[2] +
     				", Total Quantity = " + product[3] + 
     				", Selling Price = " + product[4] + 
@@ -113,11 +132,14 @@ public class Invoice {
 			BufferedReader br = new BufferedReader(new FileReader("Customer_List.csv"));
 			br.readLine();
 			while ((line = br.readLine()) != null){  
-				String[] customer = line.split(splitBy);
+				String[] searched_customer = line.split(splitBy);
 				//System.out.println("Customer [ID = " + customer[0] + ", Name = " + customer[1] + ", Address = " + customer[2] + ", Phone Number = " + customer[3] + ", Sales Tax = " + customer[4] + "%]");
-				this.customer_name = customer[1];
-				this.customer_address = customer[2];
-				this.salesTaxPercent = Float.parseFloat(customer[4]);
+				int searched_customer_id = Integer.parseInt(searched_customer[0]);
+				if (customer_id == searched_customer_id) {
+					this.customer_name = searched_customer[1];
+					this.customer_address = searched_customer[2];
+					this.salesTaxPercent = Float.parseFloat(searched_customer[4]);
+				}
 			}
 			br.close();
 		} catch (Exception e) {
@@ -132,9 +154,12 @@ public class Invoice {
 			BufferedReader br = new BufferedReader(new FileReader("Salesperson_List.csv"));
 			br.readLine();
 			while ((line = br.readLine()) != null){  
-				String[] salesperson = line.split(splitBy);
+				String[] searched_salesperson = line.split(splitBy);
 				//System.out.println("Salesperson [ID = " + salesperson[0] + ", Name = " + salesperson[1] + "]");
-				this.salesperson_name = salesperson[1];
+				int searched_salesperson_id = Integer.parseInt(searched_salesperson[0]);
+				if (salesperson_id == searched_salesperson_id) {
+					this.salesperson_name = searched_salesperson[1];
+				}
 			}
 			br.close();
 		} catch (Exception e) {
@@ -142,23 +167,24 @@ public class Invoice {
 			e.printStackTrace();
 		}
     }
-    
-    private String[] find_product(int product_id) {
+/*
+    private List<String> find_product(int product_id) {
     	try {
     		String line = ""; String splitBy = ",";
 			BufferedReader br = new BufferedReader(new FileReader("Product_List.csv"));
 			br.readLine();
-			//String[] found_product;
+			List<String> found_product = Collections.emptyList();
 			while ((line = br.readLine()) != null){  
 				String[] product = line.split(splitBy);
 				//System.out.println("Product [ID = " + product[0] + ", Name = " + product[1] + "]");
 				if (product[0] == String.valueOf(product_id)) {
-					br.close();
-					return product;
+					List<String> found_prod_list = Arrays.asList(product);
+					found_product = found_prod_list;
+					break;
 				}
 			}
 			br.close();
-			return [""];
+			return found_product;
     	} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

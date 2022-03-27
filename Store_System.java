@@ -1,5 +1,5 @@
 import java.io.*;
-import java.nio.file.*;
+//import java.nio.file.*;
 import java.util.*;
 //package testing;
 
@@ -37,7 +37,7 @@ public class Store_System {
 
     Invoice createInvoice(int customer_id, int salesperson_id, HashMap<Integer, Integer> ordered_products, int delivery){
     	Invoice invoice = new Invoice(customer_id, salesperson_id, ordered_products);
-    	
+    	//Calc more attributes for invoice, like total cost.
     	return invoice;
     }
 

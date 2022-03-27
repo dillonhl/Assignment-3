@@ -29,6 +29,7 @@ public class Invoice {
     	this.ordered_products = product_orders;
     }
 
+    //I'm not sure if this method is even necessary anymore.
     void addProduct(int productID, int quantity_ordered){
 
     }
@@ -54,6 +55,7 @@ public class Invoice {
     }
 
     void printInvoice(){
+    	System.out.println("Our invoices's Working Directory = " + System.getProperty("user.dir"));
     	System.out.println(this.customer_id);
     	System.out.println(this.salesperson_id);
     	System.out.println(this.ordered_products);

@@ -1,8 +1,10 @@
+import java.util.HashMap;
+
 public class Salesperson {
     private int salesperson_id;
     String salesperson_name;
     float commission_rate;
-    List<Pair<int,float>> commissionsToPay;
+    HashMap<int,float> commissionsToPay;
     float total_commissioned_earned;
     float total_sales_made;
 
@@ -22,11 +24,11 @@ public class Salesperson {
     void checkOffCommission(int invoice_id){
 
     }
-
-    List<Pair<int,float>> getCommissionsToPay(){
+/*
+    HashMap<int,float> getCommissionsToPay(){
 
     }
-
+*/
     float getCommissionEarned(){
         return total_commissioned_earned;
     }

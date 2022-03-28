@@ -145,7 +145,7 @@ public class Store_System {
     void displaySalespeople() {
 
     }    
-/*
+
     ArrayList<Product> find_search_results(String search_term) {
     	ArrayList<Product> found_product_list = new ArrayList<Product>();
     	String[] searched_product = null;
@@ -157,24 +157,26 @@ public class Store_System {
 			while ((line = br.readLine()) != null){  
 				searched_product = line.split(splitBy);
 				//System.out.println("Product [ID = " + product[0] + ", Name = " + product[1] + "]");
-				if (searched_product[1] == search_term) {
+				String searched_product_name = searched_product[2];
+				if (searched_product_name.contains(search_term)) {
 					int found_product_id = Integer.parseInt(searched_product[0]);
 					Product found_product = new Product(found_product_id);
 					found_product_list.add(found_product);
 				}
 			}
 			br.close();
-			if (found_product_list.isEmpty()) {
-				return new ArrayList<Product>();
-			}
-			return found_product_list;
     	} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return found_product_list;
     }
-/*    
-    void displaySearchedProducts(ArrayList<Product> products) {
-    	for 
-    } */
+    
+    void displaySearchedProducts(String searchTerm, ArrayList<Product> products) {
+    	Iterator<Product> iter = products.iterator();
+    	System.out.println("Products whose names contain " + searchTerm + ":");
+    	while(iter.hasNext()) {
+    		System.out.println(iter.next());
+    	}
+    }
 }

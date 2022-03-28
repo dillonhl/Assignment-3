@@ -67,34 +67,9 @@ public class Invoice {
     	//System.out.println(this.ordered_products);
     	for(Map.Entry<Integer, Integer> entry : this.ordered_products.entrySet()) {
     		int product_id = entry.getKey();
-    		//String [] product = find_product(product_id);
-    		String[] searched_product = null;
-    		try {
-        		String line = ""; String splitBy = ",";
-    			BufferedReader br = new BufferedReader(new FileReader("Product_List.csv"));
-    			br.readLine();
-    			//List<String> found_product = Collections.emptyList();
-    			while ((line = br.readLine()) != null){  
-    				searched_product = line.split(splitBy);
-    				//System.out.println("Product [ID = " + product[0] + ", Name = " + product[1] + "]");
-    				if (Integer.parseInt(searched_product[0]) == product_id) {
-    					break;
-    				}
-    			}
-    			br.close();
-    			//return found_product;
-        	} catch (Exception e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		}
+    		Product product = new Product(product_id);
     		int ordered_quantity = entry.getValue();
-    		System.out.println("Product_ID = " + product_id +
-    				", Product_Name = " + searched_product[1] +
-    				", Warehouse # = " + searched_product[2] +
-    				", Total Quantity = " + searched_product[3] + 
-    				", Selling Price = " + searched_product[4] + 
-    				", Cost Price = " + searched_product[5] +
-    				", Ordered Quantity = " + ordered_quantity);
+       		System.out.println(product + ", Ordered Quantity = " + ordered_quantity);
     	}
     }
 
@@ -163,29 +138,6 @@ public class Invoice {
 			}
 			br.close();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
-/*
-    private List<String> find_product(int product_id) {
-    	try {
-    		String line = ""; String splitBy = ",";
-			BufferedReader br = new BufferedReader(new FileReader("Product_List.csv"));
-			br.readLine();
-			List<String> found_product = Collections.emptyList();
-			while ((line = br.readLine()) != null){  
-				String[] product = line.split(splitBy);
-				//System.out.println("Product [ID = " + product[0] + ", Name = " + product[1] + "]");
-				if (product[0] == String.valueOf(product_id)) {
-					List<String> found_prod_list = Arrays.asList(product);
-					found_product = found_prod_list;
-					break;
-				}
-			}
-			br.close();
-			return found_product;
-    	} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -23,7 +23,7 @@ public class Invoice {
     float discount; 
     float finance_charge;
     
-    Invoice(int invoice_id, Customer cust, Salesperson salesprsn, LinkedHashMap<Product,Integer> product_orders) {
+    Invoice(int invoice_id, Customer cust, Salesperson salesprsn, LinkedHashMap<Product,Integer> product_orders, int delivery) {
     	this.invoice_id = invoice_id;
     	this.invoice_creation_date = new Date();
     	this.invoice_closed_date = null;
@@ -39,7 +39,7 @@ public class Invoice {
     			this.total_amount = this.delivery_charge = 
     			this.remaining_balance = this.discount = 
     			this.finance_charge = 0;
-    	calc_amounts();
+    	calc_amounts(delivery);
     }
 
     //I'm not sure if this method is even necessary anymore.
@@ -87,6 +87,7 @@ public class Invoice {
     	}
     	System.out.printf("Pre-tax Sales Total = $%4.2f \n", this.pretax_sales_total);
     	System.out.printf("Sales Tax (%2.1f%%) = $%4.2f \n", this.salesTaxPercent, this.sales_tax_amount);
+    	System.out.printf("Delivery fee = $%2.2f \n", this.delivery_charge);
     	System.out.printf("Total Amount = $%4.2f \n", this.total_amount);
     }
 
@@ -118,14 +119,17 @@ public class Invoice {
         
     }
     
-    void calc_amounts() {
+    void calc_amounts(int delivery) {
     	for(Map.Entry<Product, Integer> entry : this.ordered_products.entrySet()) {
     		Product product = entry.getKey();
     		int ordered_quantity = entry.getValue();
        		this.pretax_sales_total += (product.selling_price * ordered_quantity);
     	}
     	this.sales_tax_amount = (this.salesTaxPercent/100) * this.pretax_sales_total;
-    	this.total_amount = this.pretax_sales_total + this.sales_tax_amount;
+    	if (delivery == 1) {
+    		this.delivery_charge = 5;
+    	}
+    	this.total_amount = this.pretax_sales_total + this.sales_tax_amount + this.delivery_charge;
     }
     /*
     private String[] find_info(String csv_file_dir) {

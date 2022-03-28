@@ -4,7 +4,7 @@ import java.util.*;
 //package testing;
 
 public class Store_System {
-	String password;
+	private String password;
 	
 	Store_System(){
 		
@@ -35,9 +35,9 @@ public class Store_System {
 
     }
 
-    Invoice createInvoice(int customer_id, int salesperson_id, HashMap<Integer, Integer> ordered_products, int delivery){
-    	Invoice invoice = new Invoice(customer_id, salesperson_id, ordered_products);
-    	//Calc more attributes for invoice, like total cost.
+    Invoice createInvoice(int invoice_id, Customer customer, Salesperson salesperson, LinkedHashMap<Product, Integer> ordered_products, int delivery){
+    	Invoice invoice = new Invoice(invoice_id, customer, salesperson, ordered_products);
+    	//Invoice creation will also calculate more attributes for invoice, like total amount.
     	return invoice;
     }
 

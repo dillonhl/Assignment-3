@@ -1,35 +1,45 @@
-import java.sql.Date;
+//import java.sql.Date;
 import java.util.*;
 import java.io.*;
 import java.lang.System;
 
 public class Invoice {
-    private int invoice_id;
-    private Date invoice_creation_date;
-    private Date invoice_closed_date;
-    private int salesperson_id;
-    private String salesperson_name;
-    private int customer_id;
-    private String customer_name;
-    private String customer_address;
-    private Float salesTaxPercent;
-    private HashMap<Integer,Integer> ordered_products;
-    float delivery_charge;
+    int invoice_id;
+    Date invoice_creation_date;
+    Date invoice_closed_date;
+    int salesperson_id;
+    String salesperson_name;
+    int customer_id;
+    String customer_name;
+    String customer_address;
+    float salesTaxPercent;
+    LinkedHashMap<Product,Integer> ordered_products;
     int totalQuantity;
     float pretax_sales_total;
     float sales_tax_amount;
     float total_amount;
+    float delivery_charge;
     float remaining_balance;
     float discount; 
     float finance_charge;
     
-    Invoice(int cust_ID, int salesprsn_ID, HashMap<Integer,Integer> product_orders) {
-    	this.customer_id = cust_ID;
+    Invoice(int invoice_id, Customer cust, Salesperson salesprsn, LinkedHashMap<Product,Integer> product_orders) {
+    	this.invoice_id = invoice_id;
+    	this.invoice_creation_date = new Date();
+    	this.invoice_closed_date = null;
+    	this.customer_id = cust.customer_id;
     	//Look up customer CSV table w ID to fill in name, address, phone #, and sales tax %.
-    	add_customer_info(customer_id);
-    	this.salesperson_id = salesprsn_ID;
-    	add_salesperson_info(salesperson_id);
+    	this.customer_name = cust.customer_name;
+    	this.customer_address = cust.customer_address;
+    	this.salesTaxPercent = cust.sales_tax;
+    	this.salesperson_id = salesprsn.salesperson_id;
+    	this.salesperson_name = salesprsn.salesperson_name;
     	this.ordered_products = product_orders;
+    	this.pretax_sales_total = this.sales_tax_amount = 
+    			this.total_amount = this.delivery_charge = 
+    			this.remaining_balance = this.discount = 
+    			this.finance_charge = 0;
+    	calc_amounts();
     }
 
     //I'm not sure if this method is even necessary anymore.
@@ -65,12 +75,19 @@ public class Invoice {
     						", Sales Tax % = " + this.salesTaxPercent + "%");
     	System.out.println("Salesperson ID: " + this.salesperson_id + ", Name: " + this.salesperson_name);
     	//System.out.println(this.ordered_products);
-    	for(Map.Entry<Integer, Integer> entry : this.ordered_products.entrySet()) {
-    		int product_id = entry.getKey();
-    		Product product = new Product(product_id);
+    	for(Map.Entry<Product, Integer> entry : this.ordered_products.entrySet()) {
+    		Product product = entry.getKey();
     		int ordered_quantity = entry.getValue();
-       		System.out.println(product + ", Ordered Quantity = " + ordered_quantity);
+       		System.out.printf("Product [ID = %2d, Serial Number = %9s, "
+       						 + "Name = %13s, Selling Price = $%3.2f, "
+       						 + "Ordered Quantity = %2d, Total Price = $%3.2f] \n",product.product_ID,
+       						    product.serial_number, product.product_name, product.selling_price,
+       						    ordered_quantity, (product.selling_price * ordered_quantity));
+       		//this.pretax_sales_total += (product.selling_price * ordered_quantity);
     	}
+    	System.out.printf("Pre-tax Sales Total = $%4.2f \n", this.pretax_sales_total);
+    	System.out.printf("Sales Tax (%2.1f%%) = $%4.2f \n", this.salesTaxPercent, this.sales_tax_amount);
+    	System.out.printf("Total Amount = $%4.2f \n", this.total_amount);
     }
 
     void saveInvoice(){
@@ -101,46 +118,14 @@ public class Invoice {
         
     }
     
-    private void add_customer_info(int customer_id) {
-    	try {
-    		String line = ""; String splitBy = ",";
-			BufferedReader br = new BufferedReader(new FileReader("Customer_List.csv"));
-			br.readLine();
-			while ((line = br.readLine()) != null){  
-				String[] searched_customer = line.split(splitBy);
-				//System.out.println("Customer [ID = " + customer[0] + ", Name = " + customer[1] + ", Address = " + customer[2] + ", Phone Number = " + customer[3] + ", Sales Tax = " + customer[4] + "%]");
-				int searched_customer_id = Integer.parseInt(searched_customer[0]);
-				if (customer_id == searched_customer_id) {
-					this.customer_name = searched_customer[1];
-					this.customer_address = searched_customer[2];
-					this.salesTaxPercent = Float.parseFloat(searched_customer[4]);
-				}
-			}
-			br.close();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
-    
-    private void add_salesperson_info(int salesperson_id) {
-    	try {
-    		String line = ""; String splitBy = ",";
-			BufferedReader br = new BufferedReader(new FileReader("Salesperson_List.csv"));
-			br.readLine();
-			while ((line = br.readLine()) != null){  
-				String[] searched_salesperson = line.split(splitBy);
-				//System.out.println("Salesperson [ID = " + salesperson[0] + ", Name = " + salesperson[1] + "]");
-				int searched_salesperson_id = Integer.parseInt(searched_salesperson[0]);
-				if (salesperson_id == searched_salesperson_id) {
-					this.salesperson_name = searched_salesperson[1];
-				}
-			}
-			br.close();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    void calc_amounts() {
+    	for(Map.Entry<Product, Integer> entry : this.ordered_products.entrySet()) {
+    		Product product = entry.getKey();
+    		int ordered_quantity = entry.getValue();
+       		this.pretax_sales_total += (product.selling_price * ordered_quantity);
+    	}
+    	this.sales_tax_amount = (this.salesTaxPercent/100) * this.pretax_sales_total;
+    	this.total_amount = this.pretax_sales_total + this.sales_tax_amount;
     }
     /*
     private String[] find_info(String csv_file_dir) {

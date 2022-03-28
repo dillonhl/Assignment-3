@@ -1,15 +1,43 @@
-public class Customer {
-    private int customer_id;
-    private String customer_name;
-    private String customer_address;
-    private int phone_number;
-    private float sales_tax;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
-    public Customer(String name, String address, int phone, float tax) {
-        customer_name = name;
+public class Customer {
+    int customer_id;
+    String customer_name;
+    String customer_address;
+    int phone_number;
+    float sales_tax;
+
+    public Customer(int cust_id) {
+        this.customer_id = cust_id;
+        String[] searched_customer = null;
+		try {
+    		String line = ""; String splitBy = ",";
+			BufferedReader br = new BufferedReader(new FileReader("Customer_List.csv"));
+			br.readLine();
+			//List<String> found_product = Collections.emptyList();
+			while ((line = br.readLine()) != null){  
+				searched_customer = line.split(splitBy);
+				//System.out.println("Product [ID = " + product[0] + ", Name = " + product[1] + "]");
+				if (Integer.parseInt(searched_customer[0]) == cust_id) {
+					this.customer_name = searched_customer[1];
+					this.customer_address = searched_customer[2];
+					this.phone_number = Integer.parseInt(searched_customer[3]);
+					this.sales_tax = Float.parseFloat(searched_customer[4]);
+				}
+			}
+			br.close();
+			//return found_product;
+    	} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        /*
+    	customer_name = name;
         customer_address = address;
         phone_number = phone;
         sales_tax = tax;
+        */
     }
 
     int getID(){

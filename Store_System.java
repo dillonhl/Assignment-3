@@ -61,7 +61,7 @@ public class Store_System {
     		String splitBy = ",";
    			//parsing a CSV file into BufferedReader class constructor
    			//System.out.println("ReadCSVExample2's Working Directory = " + System.getProperty("user.dir"));
-   			BufferedReader br = new BufferedReader(new FileReader(".\\Assignment-3 Github Folder\\Product_List_Test_for_Java_CSV.csv"));    
+   			BufferedReader br = new BufferedReader(new FileReader("Product_List_Test_for_Java_CSV.csv"));    
    			//reads one line at a time  
    			while ((line = br.readLine()) != null){  
    				String[] product = line.split(splitBy);

@@ -68,16 +68,16 @@ public class Invoice {
     	for(Map.Entry<Integer, Integer> entry : this.ordered_products.entrySet()) {
     		int product_id = entry.getKey();
     		//String [] product = find_product(product_id);
-    		String[] product = null;
+    		String[] searched_product = null;
     		try {
         		String line = ""; String splitBy = ",";
     			BufferedReader br = new BufferedReader(new FileReader("Product_List.csv"));
     			br.readLine();
     			//List<String> found_product = Collections.emptyList();
     			while ((line = br.readLine()) != null){  
-    				product = line.split(splitBy);
+    				searched_product = line.split(splitBy);
     				//System.out.println("Product [ID = " + product[0] + ", Name = " + product[1] + "]");
-    				if (product[0] == String.valueOf(product_id)) {
+    				if (Integer.parseInt(searched_product[0]) == product_id) {
     					break;
     				}
     			}
@@ -89,11 +89,11 @@ public class Invoice {
     		}
     		int ordered_quantity = entry.getValue();
     		System.out.println("Product_ID = " + product_id +
-    				", Product_Name = " + product[1] +
-    				", Warehouse # = " + product[2] +
-    				", Total Quantity = " + product[3] + 
-    				", Selling Price = " + product[4] + 
-    				", Cost Price = " + product[5] +
+    				", Product_Name = " + searched_product[1] +
+    				", Warehouse # = " + searched_product[2] +
+    				", Total Quantity = " + searched_product[3] + 
+    				", Selling Price = " + searched_product[4] + 
+    				", Cost Price = " + searched_product[5] +
     				", Ordered Quantity = " + ordered_quantity);
     	}
     }

@@ -145,7 +145,7 @@ public class Store_System {
     void displaySalespeople() {
 
     }    
-/*
+
     ArrayList<Product> find_search_results(String search_term) {
     	ArrayList<Product> found_product_list = new ArrayList<Product>();
     	String[] searched_product = null;
@@ -164,14 +164,12 @@ public class Store_System {
 				}
 			}
 			br.close();
-			if (found_product_list.isEmpty()) {
-				return new ArrayList<Product>();
-			}
-			return found_product_list;
     	} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		return found_product_list;
     }
 /*    
     void displaySearchedProducts(ArrayList<Product> products) {

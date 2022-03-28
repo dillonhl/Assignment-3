@@ -6,6 +6,7 @@ import java.util.*;
 public class Store_System {
 	private String password;
 	public ArrayList<Product> products;
+	public ArrayList<Sales> sales;
 	
 	Store_System(){
 		/*
@@ -146,6 +147,24 @@ public class Store_System {
 
     }    
 
+    void saveInvoice(Invoice invoice) {
+    	//Save invoice into Invoice_List.csv
+    	Salesperson salesprsn = new Salesperson(invoice.salesperson_id);
+    	for(Map.Entry<Product, Integer> entry : invoice.ordered_products.entrySet()) {
+    		Product product = entry.getKey();
+    		int ordered_qty = entry.getValue();
+    		Sales product_sales = new Sales(product);
+    		//Look in the existing Sales object for that product instead.
+    		product_sales.addSales(ordered_qty);
+    		product.quantity -= ordered_qty;
+    		//May change warehouse quantities too, if each product can be in more than one warehouse.
+    		System.out.println(product_sales);
+    	}
+    	float sale_commission = invoice.pretax_sales_total * (salesprsn.commission_rate/100);
+    	salesprsn.addCommission(invoice.invoice_id, sale_commission);
+    	System.out.println(salesprsn);
+    }
+    
     ArrayList<Product> find_search_results(String search_term) {
     	ArrayList<Product> found_product_list = new ArrayList<Product>();
     	String[] searched_product = null;
@@ -169,7 +188,6 @@ public class Store_System {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
 		return found_product_list;
     }
     

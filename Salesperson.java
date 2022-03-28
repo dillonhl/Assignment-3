@@ -6,7 +6,7 @@ public class Salesperson {
     int salesperson_id;
     String salesperson_name;
     float commission_rate;
-    //LinkedHashMap<int,float> commissionsToPay;
+    LinkedHashMap<Integer,Float> commissionsToPay;
     float total_commissioned_earned;
     float total_sales_made;
 
@@ -34,7 +34,7 @@ public class Salesperson {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//this.commissions_to_pay = new LinkedHashMap<int,float>();
+		this.commissionsToPay = new LinkedHashMap<Integer,Float>();
     }
     
     int getID(){
@@ -70,7 +70,16 @@ public class Salesperson {
 
     }
 */
-    void addCommission(int invoice_id){
-
+    void addCommission(int invoice_id, float sale_commission){
+    		this.commissionsToPay.put(invoice_id, sale_commission);
+    }
+    
+    @Override
+    public String toString() {
+    	return String.format("Salesperson [ID = %2d, Name = %20s, "
+    			+ "Commission Rate = %3d%%, Total Commission Earned "
+    			+ "= $%4.2f, Total Sales Made = $%4.2f]", this.salesperson_id,
+    			this.salesperson_name, this.commission_rate,
+    			this.total_commissioned_earned, this.total_sales_made);
     }
 }

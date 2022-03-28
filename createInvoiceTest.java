@@ -22,6 +22,7 @@ class createInvoiceTest {
 		//System.out.println()
 		invoice.printInvoice();
 		//Save invoice, update sales and inventory, record commission for salesperson, etc.
+		system.saveInvoice(invoice);
 	}
 
 }

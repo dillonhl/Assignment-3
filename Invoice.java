@@ -12,7 +12,7 @@ public class Invoice {
     int customer_id;
     String customer_name;
     String customer_address;
-    float salesTaxPercent;
+    float cust_sales_tax_percent;
     LinkedHashMap<Product,Integer> ordered_products;
     int totalQuantity;
     float pretax_sales_total;
@@ -31,7 +31,7 @@ public class Invoice {
     	//Look up customer CSV table w ID to fill in name, address, phone #, and sales tax %.
     	this.customer_name = cust.customer_name;
     	this.customer_address = cust.customer_address;
-    	this.salesTaxPercent = cust.sales_tax;
+    	this.cust_sales_tax_percent = cust.sales_tax;
     	this.salesperson_id = salesprsn.salesperson_id;
     	this.salesperson_name = salesprsn.salesperson_name;
     	this.ordered_products = product_orders;
@@ -72,7 +72,7 @@ public class Invoice {
     	System.out.println("Customer ID: " + this.customer_id + 
     						", Name: " + this.customer_name + 
     						", Address = " + this.customer_address + 
-    						", Sales Tax % = " + this.salesTaxPercent + "%");
+    						", Sales Tax % = " + this.cust_sales_tax_percent + "%");
     	System.out.println("Salesperson ID: " + this.salesperson_id + ", Name: " + this.salesperson_name);
     	//System.out.println(this.ordered_products);
     	for(Map.Entry<Product, Integer> entry : this.ordered_products.entrySet()) {
@@ -80,13 +80,13 @@ public class Invoice {
     		int ordered_quantity = entry.getValue();
        		System.out.printf("Product [ID = %2d, Serial Number = %9s, "
        						 + "Name = %13s, Selling Price = $%3.2f, "
-       						 + "Ordered Quantity = %2d, Total Price = $%3.2f] \n",product.product_ID,
+       						 + "Ordered Quantity = %2d, Total Price = $%4.2f] \n",product.product_ID,
        						    product.serial_number, product.product_name, product.selling_price,
        						    ordered_quantity, (product.selling_price * ordered_quantity));
        		//this.pretax_sales_total += (product.selling_price * ordered_quantity);
     	}
     	System.out.printf("Pre-tax Sales Total = $%4.2f \n", this.pretax_sales_total);
-    	System.out.printf("Sales Tax (%2.1f%%) = $%4.2f \n", this.salesTaxPercent, this.sales_tax_amount);
+    	System.out.printf("Sales Tax (%2.1f%%) = $%4.2f \n", this.cust_sales_tax_percent, this.sales_tax_amount);
     	System.out.printf("Delivery fee = $%2.2f \n", this.delivery_charge);
     	System.out.printf("Total Amount = $%4.2f \n", this.total_amount);
     }
@@ -125,7 +125,7 @@ public class Invoice {
     		int ordered_quantity = entry.getValue();
        		this.pretax_sales_total += (product.selling_price * ordered_quantity);
     	}
-    	this.sales_tax_amount = (this.salesTaxPercent/100) * this.pretax_sales_total;
+    	this.sales_tax_amount = (this.cust_sales_tax_percent/100) * this.pretax_sales_total;
     	if (delivery == 1) {
     		this.delivery_charge = 5;
     	}

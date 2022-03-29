@@ -5,12 +5,17 @@ import java.util.*;
 
 public class Store_System {
 	private String password;
-	public ArrayList<Product> products;
-	public ArrayList<Sales> sales;
+	public LinkedHashMap<Integer, Product> products;
+	public LinkedHashMap<Integer, Sales> sales;
 	
 	Store_System(){
-		/*
 		this.password = "awesome_system_150%";
+		this.products = new LinkedHashMap<Integer, Product> ();
+		this.sales = new LinkedHashMap<Integer, Sales> ();
+		importProducts();
+		initSales();
+		//import_sales();
+		/*
 		//parsing a CSV file into Scanner class constructor  
 		Store_System system = new Store_System();
 		String search_term = "Sony";
@@ -153,8 +158,8 @@ public class Store_System {
     	for(Map.Entry<Product, Integer> entry : invoice.ordered_products.entrySet()) {
     		Product product = entry.getKey();
     		int ordered_qty = entry.getValue();
-    		Sales product_sales = new Sales(product);
-    		//Look in the existing Sales object for that product instead.
+    		Sales product_sales = findProductSales(product);
+    		//Look in this.sales ArrayList for the existing Sales object for that product instead.
     		product_sales.addSales(ordered_qty);
     		product.quantity -= ordered_qty;
     		//May change warehouse quantities too, if each product can be in more than one warehouse.
@@ -198,4 +203,62 @@ public class Store_System {
     		System.out.println(iter.next());
     	}
     }
+    
+    private Sales findProductSales(Product product) {
+    	return this.sales.get(product.product_ID);
+    }
+    
+    private void importProducts() {
+    	try {
+    		String line = ""; String splitBy = ",";
+			BufferedReader br = new BufferedReader(new FileReader("Product_List.csv"));
+			br.readLine();
+			while ((line = br.readLine()) != null){  
+				String [] product = line.split(splitBy);
+				int productID = Integer.parseInt(product[0]);
+				Product newproduct = new Product(productID);
+				this.products.put(productID, newproduct);
+			}
+			br.close();
+    	} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    private void initSales() {
+    	for(Product prdct : this.products.values()) {
+    		Sales product_sales = new Sales(prdct);
+    		sales.put(prdct.product_ID, product_sales);
+    	}
+    }
+    
+    /*
+    String[][] read_CSV(String csv_filepath){
+    	String[][] data = null;
+		try {
+    		String line = ""; String splitBy = ",";
+			BufferedReader br = new BufferedReader(new FileReader(csv_filepath));
+			br.readLine();
+			int line_index = 0;
+			while ((line = br.readLine()) != null){  
+				String [] data_obj = line.split(splitBy);
+				data[line_index] = data_obj;
+				line_index++;
+			}
+			br.close();
+    	} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return data;
+    }
+    
+    void print_2D_array(String[][] data) {
+    	for (int row = 0; row < data..; row++)
+    	{
+    		String [] data_row = data[row];
+    		for (int column = 0; )
+    	}
+    } */
 }

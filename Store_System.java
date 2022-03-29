@@ -1,6 +1,8 @@
 import java.io.*;
 //import java.nio.file.*;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 //package testing;
 
 public class Store_System {
@@ -156,12 +158,22 @@ public class Store_System {
     	//Save invoice into Invoice_List.csv
     	Salesperson salesprsn = new Salesperson(invoice.salesperson_id);
     	for(Map.Entry<Product, Integer> entry : invoice.ordered_products.entrySet()) {
-    		Product product = entry.getKey();
+    		Product ordered_product = entry.getKey();
     		int ordered_qty = entry.getValue();
-    		Sales product_sales = findProductSales(product);
     		//Look in this.sales ArrayList for the existing Sales object for that product instead.
+    		Sales product_sales = findProductSales(ordered_product);
     		product_sales.addSales(ordered_qty);
-    		product.quantity -= ordered_qty;
+    		//System.out.printf("Product quantity in warehouse before order: %2d \n", product.quantity);
+    		
+    		//These next lines will decrement the quantity of the product in this system's products list, and write that change into the Product_List.csv.
+    		Product invntry_product = this.products.get(ordered_product.product_ID);
+    		invntry_product.quantity -= ordered_qty;
+    		//System.out.printf("New quantity of inventory product ID # %2d : %2d \n", invntry_product.product_ID, invntry_product.quantity);
+    		//Put this invntry_product, with this new quantity, back into this.products to update System and CSV info.
+    		//Write new inventory quantity of product to that product's line in Product_List.csv:
+    		
+    		
+    		//System.out.printf("Product quantity in warehouse after order: %2d \n", product.quantity);
     		//May change warehouse quantities too, if each product can be in more than one warehouse.
     		System.out.println(product_sales);
     	}
@@ -231,8 +243,29 @@ public class Store_System {
     		Sales product_sales = new Sales(prdct);
     		sales.put(prdct.product_ID, product_sales);
     	}
+    	//create_CSV(sales, "Sales.csv");
     }
     
+    private void create_CSV(LinkedHashMap data, String csvFileName) throws IOException{
+    	File csvOutputFile = new File(csvFileName);
+    	
+    	try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
+    		
+    	}
+    }
+    
+    public String convertToCSV(String[] data) {
+    	return Stream.of(data).map(this::escapeSpclChars).collect(Collectors.joining(","));
+    }
+    
+    public String escapeSpclChars(String data) {
+    	String escpdData = data.replaceAll("\\R", "");
+    	if (data.contains(",") || data.contains("\"") || data.contains("'")) {
+    		data = data.replace("\"", "\"\"");
+    		escpdData = "\"" + data + "\"";
+    	}
+    	return escpdData;
+    }
     /*
     String[][] read_CSV(String csv_filepath){
     	String[][] data = null;

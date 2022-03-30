@@ -91,10 +91,12 @@ public class Invoice {
     	System.out.printf("Total Amount = $%4.2f \n", this.total_amount);
     }
 
+    /*
     void saveInvoice(){
+    
 
     }
-/*
+    
     float calcCommission(){
 
     }

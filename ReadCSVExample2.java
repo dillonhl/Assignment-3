@@ -1,5 +1,5 @@
 import java.io.*;  
-//import com.opencsv.CSVReader;
+//import org.opencsv.CSVReader;
 public class ReadCSVExample2 {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

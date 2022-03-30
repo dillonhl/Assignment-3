@@ -3,6 +3,9 @@ import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.apache.commons.csv.*;
+
+//commons-csv-1.9.0;
 //package testing;
 
 public class Store_System {
@@ -157,6 +160,7 @@ public class Store_System {
     void saveInvoice(Invoice invoice) {
     	//Save invoice into Invoice_List.csv
     	Salesperson salesprsn = new Salesperson(invoice.salesperson_id);
+    	//Retrieve from and save to salesperson data structure, and CSV, later.
     	for(Map.Entry<Product, Integer> entry : invoice.ordered_products.entrySet()) {
     		Product ordered_product = entry.getKey();
     		int ordered_qty = entry.getValue();
@@ -165,11 +169,12 @@ public class Store_System {
     		product_sales.addSales(ordered_qty);
     		//System.out.printf("Product quantity in warehouse before order: %2d \n", product.quantity);
     		
-    		//These next lines will decrement the quantity of the product in this system's products list, and write that change into the Product_List.csv.
-    		Product invntry_product = this.products.get(ordered_product.product_ID);
-    		invntry_product.quantity -= ordered_qty;
-    		//System.out.printf("New quantity of inventory product ID # %2d : %2d \n", invntry_product.product_ID, invntry_product.quantity);
-    		//Put this invntry_product, with this new quantity, back into this.products to update System and CSV info.
+    		//These next lines will decrement the inventory quantity of the product in this system's products list, and write that change into the Product_List.csv.
+    		Product system_product = this.products.get(ordered_product.product_ID);
+    		system_product.quantity -= ordered_qty;
+    		//System.out.printf("New quantity of inventory product ID # %2d : %2d \n", system_product.product_ID, system_product.quantity);
+    		//Put this system_product, with this new quantity, back into this.products to update System and CSV info.
+    		//System's this.products was already updated, now update Product_List.csv:
     		//Write new inventory quantity of product to that product's line in Product_List.csv:
     		
     		
@@ -243,14 +248,17 @@ public class Store_System {
     		Sales product_sales = new Sales(prdct);
     		sales.put(prdct.product_ID, product_sales);
     	}
-    	//create_CSV(sales, "Sales.csv");
+    	File SalesCSVOutputFile = new File("Sales.csv");
+    	Collection<Sales> sales_objs = sales.values();
+    	List<String[]> saleLines = new ArrayList<>();
+    	//... To be continued...
     }
     
     private void create_CSV(LinkedHashMap data, String csvFileName) throws IOException{
     	File csvOutputFile = new File(csvFileName);
-    	
+    	Collection<autotype> dataVals = data.values();
     	try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
-    		
+    		//More code needed...
     	}
     }
     

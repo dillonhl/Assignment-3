@@ -226,8 +226,7 @@ public class Store_System {
 				searched_product = line.split(splitBy);
 				//System.out.println("Product [ID = " + product[0] + ", Name = " + product[1] + "]");
 				
-				int numOfProdListAttr = 6;
-				for(int i=0; i<numOfProdListAttr; i++) {
+				for(int i=0; i<searched_product.length; i++) {
 					String searched_keyword = searched_product[i];
 					if (searched_keyword.contains(search_term)) {
 						int found_product_id = Integer.parseInt(searched_product[0]);

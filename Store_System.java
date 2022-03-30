@@ -186,7 +186,7 @@ public class Store_System {
     	salesprsn.addCommission(invoice.invoice_id, sale_commission);
     	System.out.println(salesprsn);
     }
-    
+ /*   
     ArrayList<Product> find_search_results(String search_term) {
     	ArrayList<Product> found_product_list = new ArrayList<Product>();
     	String[] searched_product = null;
@@ -212,13 +212,44 @@ public class Store_System {
 		}
 		return found_product_list;
     }
+    */
+    
+    ArrayList<Product> find_search_results(String search_term) {
+    	ArrayList<Product> found_product_list = new ArrayList<Product>();
+    	String[] searched_product = null;
+		try {
+    		String line = ""; String splitBy = ",";
+			BufferedReader br = new BufferedReader(new FileReader("Product_List.csv"));
+			br.readLine();
+			//List<String> found_product = Collections.emptyList();
+			while ((line = br.readLine()) != null){  
+				searched_product = line.split(splitBy);
+				//System.out.println("Product [ID = " + product[0] + ", Name = " + product[1] + "]");
+				
+				int numOfProdListAttr = 6;
+				for(int i=0; i<numOfProdListAttr; i++) {
+					String searched_keyword = searched_product[i];
+					if (searched_keyword.contains(search_term)) {
+						int found_product_id = Integer.parseInt(searched_product[0]);
+						Product found_product = new Product(found_product_id);
+						found_product_list.add(found_product);
+					}
+				}
+			}
+			br.close();
+    	} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return found_product_list;
+    }
     
     void displaySearchedProducts(String searchTerm, ArrayList<Product> products) {
     	Iterator<Product> iter = products.iterator();
-    	System.out.println("Products whose names contain " + searchTerm + ":");
+    	System.out.println("Products containing keyword " + searchTerm + ":");
     	while(iter.hasNext()) {
     		System.out.println(iter.next());
-    	}
+    	} System.out.println("");
     }
     
     private Sales findProductSales(Product product) {
@@ -254,13 +285,13 @@ public class Store_System {
     	//... To be continued...
     }
     
-    private void create_CSV(LinkedHashMap data, String csvFileName) throws IOException{
+   /* private void create_CSV(LinkedHashMap data, String csvFileName) throws IOException{
     	File csvOutputFile = new File(csvFileName);
     	Collection<autotype> dataVals = data.values();
     	try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
     		//More code needed...
     	}
-    }
+    }*/
     
     public String convertToCSV(String[] data) {
     	return Stream.of(data).map(this::escapeSpclChars).collect(Collectors.joining(","));

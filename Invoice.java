@@ -69,6 +69,7 @@ public class Invoice {
 
     void printInvoice(){
     	//System.out.println("Our invoices's Working Directory = " + System.getProperty("user.dir"));
+    	System.out.println("Invoice ID: ")
     	System.out.println("Customer ID: " + this.customer_id + 
     						", Name: " + this.customer_name + 
     						", Address = " + this.customer_address + 

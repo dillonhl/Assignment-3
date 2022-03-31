@@ -1,6 +1,5 @@
 import java.io.FileReader;  
-import com.opencsv.CSVReader;
-//import com.opencsv.CSVReader;  
+import com.opencsv.*;  
 public class ReadCSVExample3  
 {    
 	public static void main(String[] args)  

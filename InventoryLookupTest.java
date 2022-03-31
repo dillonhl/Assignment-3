@@ -9,9 +9,24 @@ import java.util.Scanner;
 import org.junit.jupiter.api.Test;
 
 class InventoryLookupTest {
-
 	@Test
-	void test1() {  
+	void findOtherExistingValues() {
+		Store_System system = new Store_System();
+		String search_term = "900";
+		ArrayList<Product> found_prdcts = system.find_search_results(search_term);
+		system.displaySearchedProducts(search_term, found_prdcts);
+	}	
+	
+	@Test
+	void findNonExistingValues() {
+		Store_System system = new Store_System();
+		String search_term = "8000";
+		ArrayList<Product> found_prdcts = system.find_search_results(search_term);
+		system.displaySearchedProducts(search_term, found_prdcts);
+	}	
+	
+	@Test
+	void findExistingProduct() {  
 		Store_System system = new Store_System();
 		String search_term = "Sony";
 		ArrayList<Product> found_prdcts = system.find_search_results(search_term);
@@ -19,10 +34,10 @@ class InventoryLookupTest {
 	}
 	
 	@Test
-	void test2() {
-		Store_System system2 = new Store_System();
-		String search_term2 = "Disney";
-		ArrayList<Product> found_prdcts2 = system2.find_search_results(search_term2);
-		system2.displaySearchedProducts(search_term2, found_prdcts2);
+	void findNonExistingProduct() {
+		Store_System system = new Store_System();
+		String search_term = "Disney";
+		ArrayList<Product> found_prdcts = system.find_search_results(search_term);
+		system.displaySearchedProducts(search_term, found_prdcts);
 	}
 }

@@ -1,9 +1,20 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 //import java.nio.file.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.apache.commons.csv.*;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+
+import com.opencsv.CSVWriter;
 
 //commons-csv-1.9.0;
 //package testing;
@@ -19,6 +30,7 @@ public class Store_System {
 		this.sales = new LinkedHashMap<Integer, Sales> ();
 		importProducts();
 		initSales();
+		initInvoices();
 		//import_sales();
 		/*
 		//parsing a CSV file into Scanner class constructor  
@@ -157,34 +169,54 @@ public class Store_System {
 
     }    
 
-    void saveInvoice(Invoice invoice) {
-    	//Save invoice into Invoice_List.csv
-    	Salesperson salesprsn = new Salesperson(invoice.salesperson_id);
-    	//Retrieve from and save to salesperson data structure, and CSV, later.
-    	for(Map.Entry<Product, Integer> entry : invoice.ordered_products.entrySet()) {
-    		Product ordered_product = entry.getKey();
-    		int ordered_qty = entry.getValue();
-    		//Look in this.sales ArrayList for the existing Sales object for that product instead.
-    		Sales product_sales = findProductSales(ordered_product);
-    		product_sales.addSales(ordered_qty);
-    		//System.out.printf("Product quantity in warehouse before order: %2d \n", product.quantity);
+    void saveInvoice(Invoice invoice){
+    	try {
+    		//Save invoice into Invoice_List.csv
+    		//Add another record to that csv file.
+    		FileWriter fstream = new FileWriter("Invoice_List.csv");
+    		CSVWriter csvWriter = new CSVWriter(fstream);
+    		String invoice_set[] = {/*put list of strings of invoice attrs*/}
+    		csvWriter.writeNext(invoice_set);
+    		/*
+    		(String.format("%2d, %2d/%2d/%4d, %2d/%2d/%4d, ")
+    				invoice.invoice_id, invoice.invoice_creation_date, 
+    		invoice.invoice_closed_date);
+    		out.newLine();
+    		//Just save invoice in CSV for now, and deal with these other details later:
+    		/*
+    		Salesperson salesprsn = new Salesperson(invoice.salesperson_id);
+    		//Retrieve from and save to salesperson data structure, and CSV, later.
+    		for(Map.Entry<Product, Integer> entry : invoice.ordered_products.entrySet()) {
+    			Product ordered_product = entry.getKey();
+    			int ordered_qty = entry.getValue();
+    			//Look in this.sales ArrayList for the existing Sales object for that product instead.
+    			Sales product_sales = findProductSales(ordered_product);
+    			product_sales.addSales(ordered_qty);
+    			//System.out.printf("Product quantity in warehouse before order: %2d \n", product.quantity);
     		
-    		//These next lines will decrement the inventory quantity of the product in this system's products list, and write that change into the Product_List.csv.
-    		Product system_product = this.products.get(ordered_product.product_ID);
-    		system_product.quantity -= ordered_qty;
-    		//System.out.printf("New quantity of inventory product ID # %2d : %2d \n", system_product.product_ID, system_product.quantity);
-    		//Put this system_product, with this new quantity, back into this.products to update System and CSV info.
-    		//System's this.products was already updated, now update Product_List.csv:
-    		//Write new inventory quantity of product to that product's line in Product_List.csv:
-    		
-    		
-    		//System.out.printf("Product quantity in warehouse after order: %2d \n", product.quantity);
-    		//May change warehouse quantities too, if each product can be in more than one warehouse.
-    		System.out.println(product_sales);
-    	}
-    	float sale_commission = invoice.pretax_sales_total * (salesprsn.commission_rate/100);
-    	salesprsn.addCommission(invoice.invoice_id, sale_commission);
-    	System.out.println(salesprsn);
+    			//These next lines will decrement the inventory quantity of the product in this system's products list, and write that change into the Product_List.csv.
+    			Product system_product = this.products.get(ordered_product.product_ID);
+    			system_product.quantity -= ordered_qty;
+    			//System.out.printf("New quantity of inventory product ID # %2d : %2d \n", system_product.product_ID, system_product.quantity);
+    			//Put this system_product, with this new quantity, back into this.products to update System and CSV info.
+    			//System's this.products was already updated, now update Product_List.csv:
+    			//Write new inventory quantity of product to that product's line in Product_List.csv:
+    			//Reader product_in = new FileReader("Product_List.csv");
+    			//@SuppressWarnings("deprecation")
+    			//Iterable<CSVRecord> product_records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(product_in);
+    			
+    			//System.out.printf("Product quantity in warehouse after order: %2d \n", product.quantity);
+    			//May change warehouse quantities too, if each product can be in more than one warehouse.
+    			System.out.println(product_sales);
+    		}	
+    		float sale_commission = invoice.pretax_sales_total * (salesprsn.commission_rate/100);
+    		salesprsn.addCommission(invoice.invoice_id, sale_commission);
+    		System.out.println(salesprsn);
+    		*/
+    	}	catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     ArrayList<Product> find_search_results(String search_term) {
@@ -198,11 +230,13 @@ public class Store_System {
 			while ((line = br.readLine()) != null){  
 				searched_product = line.split(splitBy);
 				//System.out.println("Product [ID = " + product[0] + ", Name = " + product[1] + "]");
-				String searched_product_name = searched_product[2];
-				if (searched_product_name.contains(search_term)) {
-					int found_product_id = Integer.parseInt(searched_product[0]);
-					Product found_product = new Product(found_product_id);
-					found_product_list.add(found_product);
+				for(int i=0; i<searched_product.length; i++) {
+					String searched_keyword = searched_product[i];
+					if (searched_keyword.contains(search_term)) {
+						int found_product_id = Integer.parseInt(searched_product[0]);
+						Product found_product = new Product(found_product_id);
+						found_product_list.add(found_product);
+					}
 				}
 			}
 			br.close();
@@ -215,7 +249,7 @@ public class Store_System {
     
     void displaySearchedProducts(String searchTerm, ArrayList<Product> products) {
     	Iterator<Product> iter = products.iterator();
-    	System.out.println("Products whose names contain " + searchTerm + ":");
+    	System.out.println("Products with a field that contains " + searchTerm + ":");
     	while(iter.hasNext()) {
     		System.out.println(iter.next());
     	}
@@ -250,10 +284,37 @@ public class Store_System {
     	}
     	File SalesCSVOutputFile = new File("Sales.csv");
     	Collection<Sales> sales_objs = sales.values();
-    	List<String[]> saleLines = new ArrayList<>();
-    	//... To be continued...
+    	List<String[]> salesLines = new ArrayList<>();
+    	//... To be continued..
+    	for (Sales sale : sales_objs) {
+    		salesLines.add(new String[] {sale.productID, 
+    				sale.serialNumber, sale.productName,
+    				sale.sellingPrice, sale.retailPrice,
+    				sale.unitProfit, sale.totalQuantitySold,
+    				sale.totalSales, sale.totalCost,
+    				sale.totalProfit, sale.totalProfitPercent});
+    	}
+    	
     }
     
+    private void initInvoices() {
+    	try {
+			FileWriter invoice_out = new FileWriter("Invoices.txt");
+			@SuppressWarnings("deprecation")
+			CSVPrinter printer = CSVFormat.DEFAULT.withHeader("Invoice ID",
+					"Invoice Creation Date", "Invoice Closed Date",
+					"Salesperson ID", "Salesperson Name", "Customer ID",
+					"Customer Name", "Customer Address", "Customer Sales Tax %",
+					"Ordered Products", "Total Quantity", "Pre-Tax Sales Total",
+					"Sales Tax Amount", "Total Amount", "Delivery Charge",
+					"Remaining Balance", "Discount", "Finance Charge").print(invoice_out);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    }
+/*    
     private void create_CSV(LinkedHashMap data, String csvFileName) throws IOException{
     	File csvOutputFile = new File(csvFileName);
     	Collection<autotype> dataVals = data.values();
@@ -261,7 +322,7 @@ public class Store_System {
     		//More code needed...
     	}
     }
-    
+*/    
     public String convertToCSV(String[] data) {
     	return Stream.of(data).map(this::escapeSpclChars).collect(Collectors.joining(","));
     }

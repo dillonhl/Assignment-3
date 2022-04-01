@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.PrintWriter;
 //import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,9 +12,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+//import java.util.String.*;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.*;
 
 import com.opencsv.CSVWriter;
 
@@ -23,14 +25,19 @@ public class Store_System {
 	private String password;
 	public LinkedHashMap<Integer, Product> products;
 	public LinkedHashMap<Integer, Sales> sales;
+	public LinkedHashMap<Integer, Invoice> invoices;
+	public LinkedHashMap<Integer, Salesperson> salespeople;
 	
 	Store_System(){
 		this.password = "awesome_system_150%";
 		this.products = new LinkedHashMap<Integer, Product> ();
 		this.sales = new LinkedHashMap<Integer, Sales> ();
+		this.invoices = new LinkedHashMap<Integer, Invoice> ();
 		importProducts();
-		initSales();
+		/*
 		initInvoices();
+		initSales();
+		initSalespeople();
 		//import_sales();
 		/*
 		//parsing a CSV file into Scanner class constructor  
@@ -171,17 +178,32 @@ public class Store_System {
 
     void saveInvoice(Invoice invoice){
     	try {
+    		this.invoices.put(invoice.invoice_id, invoice);
     		//Save invoice into Invoice_List.csv
     		//Add another record to that csv file.
     		FileWriter fstream = new FileWriter("Invoice_List.csv");
-    		CSVWriter csvWriter = new CSVWriter(fstream);
-    		String invoice_set[] = {/*put list of strings of invoice attrs*/}
-    		csvWriter.writeNext(invoice_set);
-    		/*
-    		(String.format("%2d, %2d/%2d/%4d, %2d/%2d/%4d, ")
-    				invoice.invoice_id, invoice.invoice_creation_date, 
-    		invoice.invoice_closed_date);
-    		out.newLine();
+    		PrintWriter out = new PrintWriter(fstream);
+    		//CSVWriter csvWriter = new CSVWriter(fstream);
+    		String [] invoice_set = {String.valueOf(invoice.invoice_id),
+    				String.valueOf(invoice.invoice_creation_date),
+    				String.valueOf(invoice.invoice_closed_date),
+    			    String.valueOf(invoice.salesperson_id), 
+    			    invoice.salesperson_name, String.valueOf(invoice.customer_id),
+    			    invoice.customer_name, invoice.customer_address,
+    			    String.valueOf(invoice.cust_sales_tax_percent),
+    			    String.valueOf(invoice.ordered_products),
+    			    String.valueOf(invoice.totalQuantityOrdered),
+    			    String.valueOf(invoice.pretax_sales_total),
+    			    String.valueOf(invoice.sales_tax_amount),
+    			    String.valueOf(invoice.delivery_charge),
+    			    String.valueOf(invoice.total_amount),
+    			    String.valueOf(invoice.remaining_balance),
+    			    String.valueOf(invoice.discount), 
+    			    String.valueOf(invoice.finance_charge)};
+    		String invoice_str = convertToCSV(invoice_set);
+    		//(String.format("%2d, %2d/%2d/%4d, %2d/%2d/%4d, ") invoice.invoice_id, invoice.invoice_creation_date, invoice.invoice_closed_date);
+    		//csvWriter.writeNext(invoice_set);
+    		out.write(invoice_str);
     		//Just save invoice in CSV for now, and deal with these other details later:
     		/*
     		Salesperson salesprsn = new Salesperson(invoice.salesperson_id);
@@ -213,6 +235,8 @@ public class Store_System {
     		salesprsn.addCommission(invoice.invoice_id, sale_commission);
     		System.out.println(salesprsn);
     		*/
+    		fstream.close();
+    		//out.close();
     	}	catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -276,7 +300,7 @@ public class Store_System {
 			e.printStackTrace();
 		}
     }
-    
+    /*
     private void initSales() {
     	for(Product prdct : this.products.values()) {
     		Sales product_sales = new Sales(prdct);
@@ -296,18 +320,21 @@ public class Store_System {
     	}
     	
     }
-    
+ 
     private void initInvoices() {
     	try {
-			FileWriter invoice_out = new FileWriter("Invoices.txt");
-			@SuppressWarnings("deprecation")
-			CSVPrinter printer = CSVFormat.DEFAULT.withHeader("Invoice ID",
-					"Invoice Creation Date", "Invoice Closed Date",
-					"Salesperson ID", "Salesperson Name", "Customer ID",
-					"Customer Name", "Customer Address", "Customer Sales Tax %",
-					"Ordered Products", "Total Quantity", "Pre-Tax Sales Total",
-					"Sales Tax Amount", "Total Amount", "Delivery Charge",
-					"Remaining Balance", "Discount", "Finance Charge").print(invoice_out);
+			FileWriter invoiceStart = new FileWriter("Invoices.csv");
+			CSVWriter csvWriter = new CSVWriter(invoiceStart);
+    		String [] invoice_hdrs = {"Invoice ID", "Invoice Creation Date",
+    				"Invoice Closed Date", "Salesperson ID", 
+    				"Salesperson Name", "Customer ID", "Customer Name", 
+    				"Customer Address", "Customer Sales Tax %",
+    			    "Ordered Products", "Total Quantity", "Pretax Sales Total", 
+    			    "Sales Tax Amount", "Delivery Charge", "Total Amount", 
+    			    "Remaining Balance", "Discount", "Finance Charge"};
+    		//(String.format("%2d, %2d/%2d/%4d, %2d/%2d/%4d, ") invoice.invoice_id, invoice.invoice_creation_date, invoice.invoice_closed_date);
+    		csvWriter.writeNext(invoice_hdrs);
+    		csvWriter.close();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -14,11 +14,11 @@ public class Invoice {
     String customer_address;
     float cust_sales_tax_percent;
     LinkedHashMap<Product,Integer> ordered_products;
-    int totalQuantity;
+    int totalQuantityOrdered;
     float pretax_sales_total;
     float sales_tax_amount;
-    float total_amount;
     float delivery_charge;
+    float total_amount;
     float remaining_balance;
     float discount; 
     float finance_charge;
@@ -35,6 +35,9 @@ public class Invoice {
     	this.salesperson_id = salesprsn.salesperson_id;
     	this.salesperson_name = salesprsn.salesperson_name;
     	this.ordered_products = product_orders;
+    	for (Integer orderedQty : this.ordered_products.values()) {
+    		this.totalQuantityOrdered += orderedQty;
+    	}
     	this.pretax_sales_total = this.sales_tax_amount = 
     			this.total_amount = this.delivery_charge = 
     			this.remaining_balance = this.discount = 
@@ -69,7 +72,7 @@ public class Invoice {
 
     void printInvoice(){
     	//System.out.println("Our invoices's Working Directory = " + System.getProperty("user.dir"));
-    	System.out.println("Invoice ID: ")
+    	System.out.println("Invoice ID: " + this.invoice_id);
     	System.out.println("Customer ID: " + this.customer_id + 
     						", Name: " + this.customer_name + 
     						", Address = " + this.customer_address + 
@@ -86,6 +89,7 @@ public class Invoice {
        						    ordered_quantity, (product.selling_price * ordered_quantity));
        		//this.pretax_sales_total += (product.selling_price * ordered_quantity);
     	}
+    	System.out.printf("Total Quantity Ordered = %2d \n", this.totalQuantityOrdered);
     	System.out.printf("Pre-tax Sales Total = $%4.2f \n", this.pretax_sales_total);
     	System.out.printf("Sales Tax (%2.1f%%) = $%4.2f \n", this.cust_sales_tax_percent, this.sales_tax_amount);
     	System.out.printf("Delivery fee = $%2.2f \n", this.delivery_charge);

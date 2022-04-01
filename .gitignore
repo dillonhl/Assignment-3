@@ -17,3 +17,10 @@
 .metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jst.j2ee.webservice.ui.prefs
 .metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.mylyn.context.core.prefs
 .metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.wst.ws.service.policy.prefs
+/ExcsveQtyException.class
+/NegQtyException.class
+/CustNotFoundExcptn.class
+/SalesprsnNotFoundExcptn.class
+/ProductNotFoundException.class
+/AllTests.class
+/AllAsgnmnt3Tests.class

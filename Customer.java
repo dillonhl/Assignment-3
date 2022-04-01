@@ -8,7 +8,7 @@ public class Customer {
     int phone_number;
     float sales_tax;
 
-    public Customer(int cust_id) {
+    public Customer(int cust_id) throws Exception {
         this.customer_id = cust_id;
         String[] searched_customer = null;
 		try {
@@ -26,11 +26,15 @@ public class Customer {
 					this.sales_tax = Float.parseFloat(searched_customer[4]);
 				}
 			}
+			if (this.customer_name == null) {
+				throw new CustNotFoundExcptn(String.format("Customer # %2d could not be found. Pls enter another customer.",  cust_id));
+			}
 			br.close();
 			//return found_product;
     	} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Error: " + e);
+			throw e;
 		}
         /*
     	customer_name = name;

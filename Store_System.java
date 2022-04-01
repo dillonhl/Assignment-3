@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 //import java.util.String.*;
@@ -34,8 +35,8 @@ public class Store_System {
 		this.sales = new LinkedHashMap<Integer, Sales> ();
 		this.invoices = new LinkedHashMap<Integer, Invoice> ();
 		importProducts();
-		/*
 		initInvoices();
+		/*
 		initSales();
 		initSalespeople();
 		//import_sales();
@@ -98,13 +99,35 @@ public class Store_System {
 
     }
 
-    Invoice createInvoice(int invoice_id, Customer customer, Salesperson salesperson, LinkedHashMap<Product, Integer> ordered_products, int delivery){
+    Invoice createInvoice(int invoice_id, Customer customer, Salesperson salesperson, LinkedHashMap<Product, Integer> ordered_products, int delivery) throws Exception{
+    	try {
+			qty_check(ordered_products);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error: " + e);
+			throw e;
+		}    	
     	Invoice invoice = new Invoice(invoice_id, customer, salesperson, ordered_products, delivery);
     	//Invoice creation will also calculate more attributes for invoice, like total amount.
     	return invoice;
     }
 
-    void addSalesperson(){
+    private void qty_check(LinkedHashMap<Product, Integer> ordered_products) throws Exception {
+		// TODO Auto-generated method stub
+    	for(Map.Entry<Product, Integer> entry : ordered_products.entrySet()) {
+    		Product product = entry.getKey();
+    		int ordered_qty = entry.getValue();
+       		if (ordered_qty > product.inv_quantity) {
+       			throw new ExcsveQtyException(String.format("Product ID # %2d of %13s only has %2d in the warehouses. Pls order a smaller number.", 
+       					product.product_ID, product.product_name, product.inv_quantity));
+       		}else if (ordered_qty < 0) {
+       			throw new NegQtyException(String.format("%2d is below 0. Please order a quantity above 0.", ordered_qty));
+       		}
+    	}
+	}
+
+
+	void addSalesperson(){
 
     }
 
@@ -204,6 +227,7 @@ public class Store_System {
     		//(String.format("%2d, %2d/%2d/%4d, %2d/%2d/%4d, ") invoice.invoice_id, invoice.invoice_creation_date, invoice.invoice_closed_date);
     		//csvWriter.writeNext(invoice_set);
     		out.write(invoice_str);
+    		out.println();
     		//Just save invoice in CSV for now, and deal with these other details later:
     		/*
     		Salesperson salesprsn = new Salesperson(invoice.salesperson_id);
@@ -323,7 +347,7 @@ public class Store_System {
 */
     private void initInvoices() {
     	try {
-    		FileWriter invcestrm = new FileWriter("Invoice_List.csv", true);
+    		FileWriter invcestrm = new FileWriter("Invoice_List.csv");
     		PrintWriter invceInit = new PrintWriter(invcestrm);
     		String [] invoice_hdrs = {"Invoice ID", "Invoice Creation Date",
     				"Invoice Closed Date", "Salesperson ID", 
@@ -337,6 +361,8 @@ public class Store_System {
     		//(String.format("%2d, %2d/%2d/%4d, %2d/%2d/%4d, ") invoice.invoice_id, invoice.invoice_creation_date, invoice.invoice_closed_date);
     		//csvWriter.writeNext(invoice_set);
     		invceInit.write(invoice_str);
+    		invceInit.println();
+    		invceInit.close();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -364,6 +390,7 @@ public class Store_System {
     	}
     	return escpdData;
     }
+    
     /*
     String[][] read_CSV(String csv_filepath){
     	String[][] data = null;

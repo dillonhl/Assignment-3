@@ -10,7 +10,7 @@ public class Salesperson {
     	float total_commission_earned;
     	float total_sales_made;
 
-    	Salesperson(int salesprsn_id){
+    	Salesperson(int salesprsn_id) throws Exception{
     		this.salesperson_id = salesprsn_id;
     		String[] searched_salesprsn = null;
 		try {
@@ -28,14 +28,18 @@ public class Salesperson {
 					this.total_sales_made = Float.parseFloat(searched_salesprsn[4]);
 				}
 			}
+			if (this.salesperson_name == null) {
+				throw new SalesprsnNotFoundExcptn(String.format("Salesperson # %2d could not be found. Pls find another one.", salesprsn_id));
+			}
 			br.close();
 			//return found_product;
     		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Error: " + e);
+			throw e;
 		}
 		this.commissionsToPay = new LinkedHashMap<Integer,Float>();
-    	}
+    }
     
 	int getID(){
     		return salesperson_id;

@@ -93,7 +93,7 @@ public class Invoice {
     	System.out.printf("Pre-tax Sales Total = $%4.2f \n", this.pretax_sales_total);
     	System.out.printf("Sales Tax (%2.1f%%) = $%4.2f \n", this.cust_sales_tax_percent, this.sales_tax_amount);
     	System.out.printf("Delivery fee = $%2.2f \n", this.delivery_charge);
-    	System.out.printf("Total Amount = $%4.2f \n", this.total_amount);
+    	System.out.printf("Total Amount = $%4.2f \n \n", this.total_amount);
     }
 
     /*

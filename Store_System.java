@@ -28,6 +28,7 @@ public class Store_System {
 	public LinkedHashMap<Integer, Sales> sales;
 	public LinkedHashMap<Integer, Invoice> invoices;
 	public LinkedHashMap<Integer, Salesperson> salespeople;
+	private CSVManager csvMngr;
 	
 	Store_System(){
 		this.password = "awesome_system_150%";
@@ -267,7 +268,7 @@ public class Store_System {
 		}
     }
     
-    ArrayList<Product> find_search_results(String search_term) {
+    ArrayList<Product> find_products(String search_term) {
     	ArrayList<Product> found_product_list = new ArrayList<Product>();
     	String[] searched_product = null;
 		try {

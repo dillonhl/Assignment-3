@@ -22,7 +22,7 @@ public class Sales {
     	this.unitProfit = this.sellingPrice - this.retailPrice;
     	this.totalQuantitySold = 0;
     	this.totalSales = 0;
-    	this.totalCost = prdct.retail_price * prdct.quantity;
+    	this.totalCost = prdct.retail_price * prdct.inv_quantity;
     	updateTotalProfit();
     }
     

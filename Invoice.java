@@ -27,19 +27,20 @@ public class Invoice {
     	this.invoice_id = invoice_id;
     	this.invoice_creation_date = new Date();
     	this.invoice_closed_date = null;
+    	this.salesperson_id = salesprsn.salesperson_id;
+    	this.salesperson_name = salesprsn.salesperson_name;
     	this.customer_id = cust.customer_id;
     	//Look up customer CSV table w ID to fill in name, address, phone #, and sales tax %.
     	this.customer_name = cust.customer_name;
     	this.customer_address = cust.customer_address;
     	this.cust_sales_tax_percent = cust.sales_tax;
-    	this.salesperson_id = salesprsn.salesperson_id;
-    	this.salesperson_name = salesprsn.salesperson_name;
+    	
     	this.ordered_products = product_orders;
     	for (Integer orderedQty : this.ordered_products.values()) {
     		this.totalQuantityOrdered += orderedQty;
     	}
     	this.pretax_sales_total = this.sales_tax_amount = 
-    			this.total_amount = this.delivery_charge = 
+    			this.delivery_charge = this.total_amount =
     			this.remaining_balance = this.discount = 
     			this.finance_charge = 0;
     	calc_amounts(delivery);
@@ -73,6 +74,7 @@ public class Invoice {
     void printInvoice(){
     	//System.out.println("Our invoices's Working Directory = " + System.getProperty("user.dir"));
     	System.out.println("Invoice ID: " + this.invoice_id);
+    	System.out.println("Date: " + this.invoice_creation_date);
     	System.out.println("Customer ID: " + this.customer_id + 
     						", Name: " + this.customer_name + 
     						", Address = " + this.customer_address + 

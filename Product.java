@@ -30,10 +30,10 @@ public class Product {
 					this.retail_price = Float.parseFloat(searched_product[6]);
 				}
 			}
+			br.close();
 			if (this.product_name == null) {
 				throw new ProductNotFoundException(String.format("Product # %4d could not be found. Pls try another product.", product_id));
 			}
-			br.close();
 			//return found_product;
     	} catch (Exception e) {
 			// TODO Auto-generated catch block

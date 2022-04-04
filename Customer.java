@@ -26,10 +26,10 @@ public class Customer {
 					this.sales_tax = Float.parseFloat(searched_customer[4]);
 				}
 			}
+			br.close();
 			if (this.customer_name == null) {
 				throw new CustNotFoundExcptn(String.format("Customer # %2d could not be found. Pls enter another customer.",  cust_id));
 			}
-			br.close();
 			//return found_product;
     	} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -43,7 +43,7 @@ public class Customer {
         sales_tax = tax;
         */
     }
-
+/*
     int getID(){
         return customer_id;
     }
@@ -72,5 +72,5 @@ public class Customer {
         return sales_tax;
     }
     
-
+*/
 }

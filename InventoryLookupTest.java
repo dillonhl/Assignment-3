@@ -13,7 +13,7 @@ class InventoryLookupTest {
 	void findOtherExistingValues() {
 		Store_System system = new Store_System();
 		String search_term = "900";
-		ArrayList<Product> found_prdcts = system.find_products(search_term);
+		ArrayList<Product> found_prdcts = system.findProducts(search_term);
 		system.displaySearchedProducts(search_term, found_prdcts);
 	}	
 	
@@ -21,7 +21,7 @@ class InventoryLookupTest {
 	void findNonExistingValues() {
 		Store_System system = new Store_System();
 		String search_term = "8000";
-		ArrayList<Product> found_prdcts = system.find_products(search_term);
+		ArrayList<Product> found_prdcts = system.findProducts(search_term);
 		system.displaySearchedProducts(search_term, found_prdcts);
 	}	
 	
@@ -29,7 +29,7 @@ class InventoryLookupTest {
 	void findExistingProduct() {  
 		Store_System system = new Store_System();
 		String search_term = "Sony";
-		ArrayList<Product> found_prdcts = system.find_products(search_term);
+		ArrayList<Product> found_prdcts = system.findProducts(search_term);
 		system.displaySearchedProducts(search_term, found_prdcts);
 	}
 	
@@ -37,7 +37,7 @@ class InventoryLookupTest {
 	void findNonExistingProduct() {
 		Store_System system = new Store_System();
 		String search_term = "Disney";
-		ArrayList<Product> found_prdcts = system.find_products(search_term);
+		ArrayList<Product> found_prdcts = system.findProducts(search_term);
 		system.displaySearchedProducts(search_term, found_prdcts);
 	}
 }

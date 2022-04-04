@@ -1,21 +1,10 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.io.*;
 //import java.nio.file.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.*;
 //import java.util.String.*;
 
 import org.apache.commons.csv.*;
+import org.junit.platform.commons.util.StringUtils;
 
 import com.opencsv.CSVWriter;
 
@@ -27,7 +16,7 @@ public class Store_System {
 	public LinkedHashMap<Integer, Product> products;
 	public LinkedHashMap<Integer, Sales> sales;
 	public LinkedHashMap<Integer, Invoice> invoices;
-	public LinkedHashMap<Integer, Salesperson> salespeople;
+	//public LinkedHashMap<Integer, Salesperson> salespeople;
 	private CSVManager csvMngr;
 	
 	Store_System(){
@@ -35,8 +24,9 @@ public class Store_System {
 		this.products = new LinkedHashMap<Integer, Product> ();
 		this.sales = new LinkedHashMap<Integer, Sales> ();
 		this.invoices = new LinkedHashMap<Integer, Invoice> ();
+		this.csvMngr = new CSVManager();
 		importProducts();
-		initInvoices();
+		this.csvMngr.initInvoices();
 		/*
 		initSales();
 		initSalespeople();
@@ -75,7 +65,7 @@ public class Store_System {
 	} */
 	}
 	
-
+/*
     void resetPassword(String current_password, String new_password){
 
     }
@@ -95,11 +85,11 @@ public class Store_System {
     Customer searchCustomer(String name){
     	//return Customer with that name
     }
-*/
+
     void createCustomer(String address, String phone, float salesTax){
 
     }
-
+/*
     Invoice createInvoice(int invoice_id, Customer customer, Salesperson salesperson, LinkedHashMap<Product, Integer> ordered_products, int delivery) throws Exception{
     	try {
 			qty_check(ordered_products);
@@ -127,7 +117,6 @@ public class Store_System {
     	}
 	}
 
-
 	void addSalesperson(){
 
     }
@@ -136,7 +125,7 @@ public class Store_System {
 
     }
     
-
+/*
     void displayProducts(){
     	try {
     		//System.out.println("Our system's Working Directory = " + System.getProperty("user.dir"));
@@ -163,9 +152,9 @@ public class Store_System {
    									", Quantity = " + product[4] + 
    									", Selling Price = " + product[5] + 
    									", Cost Price = " + product[6] + "]");
-   				*/
+   				
    			}
-   				/*
+   				
     		Scanner sc = new Scanner(f);
 			sc.useDelimiter(",");   //sets the delimiter pattern  
 			while (sc.hasNext())  //returns a boolean value  
@@ -173,7 +162,7 @@ public class Store_System {
 				System.out.print(sc.next() + ",  ");  //find and returns the next complete token from this scanner  
 				}   
 			sc.close();  //closes the scanner
-			*/  
+			  
     	} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -199,7 +188,7 @@ public class Store_System {
     void displaySalespeople() {
 
     }    
-
+*/
     void saveInvoice(Invoice invoice){
     	try {
     		this.invoices.put(invoice.invoice_id, invoice);
@@ -208,7 +197,7 @@ public class Store_System {
     		FileWriter fstream = new FileWriter("Invoice_List.csv", true);
     		PrintWriter out = new PrintWriter(fstream);
     		//CSVWriter csvWriter = new CSVWriter(fstream);
-    		String [] invoice_set = {String.valueOf(invoice.invoice_id),
+    		String [] invoiceSet = {String.valueOf(invoice.invoice_id),
     				String.valueOf(invoice.invoice_creation_date),
     				String.valueOf(invoice.invoice_closed_date),
     			    String.valueOf(invoice.salesperson_id), 
@@ -224,7 +213,17 @@ public class Store_System {
     			    String.valueOf(invoice.remaining_balance),
     			    String.valueOf(invoice.discount), 
     			    String.valueOf(invoice.finance_charge)};
-    		String invoice_str = convertToCSV(invoice_set);
+    		//String invoice_str = this.csvMngr.convertToCSV(invoice_set);
+    		String invoice_str = "";
+    		for (String invoiceField : invoiceSet) {
+    			String escpdField = invoiceField.replaceAll("\\R", "");
+    	    	if (invoiceField.contains(",") || invoiceField.contains("\"") || invoiceField.contains("'")) {
+    	    		invoiceField = invoiceField.replace("\"", "\"\"");
+    	    		escpdField = "\"" + invoiceField + "\"";
+    	    	}
+    	    	invoice_str += escpdField + ",";
+    		}
+    		//invoice_str = StringUtils.chop(invoice_str);
     		//(String.format("%2d, %2d/%2d/%4d, %2d/%2d/%4d, ") invoice.invoice_id, invoice.invoice_creation_date, invoice.invoice_closed_date);
     		//csvWriter.writeNext(invoice_set);
     		out.write(invoice_str);
@@ -267,7 +266,7 @@ public class Store_System {
 			e.printStackTrace();
 		}
     }
-    
+/*
     ArrayList<Product> find_products(String search_term) {
     	ArrayList<Product> found_product_list = new ArrayList<Product>();
     	String[] searched_product = null;
@@ -295,7 +294,7 @@ public class Store_System {
 		}
 		return found_product_list;
     }
-    
+
     void displaySearchedProducts(String searchTerm, ArrayList<Product> products) {
     	Iterator<Product> iter = products.iterator();
     	System.out.println("Products with a field that contains " + searchTerm + ":");
@@ -307,7 +306,7 @@ public class Store_System {
     private Sales findProductSales(Product product) {
     	return this.sales.get(product.product_ID);
     }
-    
+*/
     private void importProducts() {
     	try {
     		String line = ""; String splitBy = ",";
@@ -325,7 +324,18 @@ public class Store_System {
 			e.printStackTrace();
 		}
     }
-    /*
+    
+	public ArrayList<Product> findProducts(String searchTerm) {
+		// TODO Auto-generated method stub
+		return this.csvMngr.findProducts(searchTerm);
+	}
+
+
+	public void displaySearchedProducts(String searchTerm, ArrayList<Product> foundPrdcts) {
+		// TODO Auto-generated method stub
+		this.csvMngr.displaySearchedProducts(searchTerm, foundPrdcts);
+	}
+/*
     private void initSales() {
     	for(Product prdct : this.products.values()) {
     		Sales product_sales = new Sales(prdct);
@@ -345,7 +355,7 @@ public class Store_System {
     	}
     	
     }
-*/
+
     private void initInvoices() {
     	try {
     		FileWriter invcestrm = new FileWriter("Invoice_List.csv");
@@ -370,7 +380,7 @@ public class Store_System {
 		}
     	
     }
-/*    
+    
     private void create_CSV(LinkedHashMap data, String csvFileName) throws IOException{
     	File csvOutputFile = new File(csvFileName);
     	Collection<autotype> dataVals = data.values();
@@ -378,7 +388,7 @@ public class Store_System {
     		//More code needed...
     	}
     }
-*/    
+    
     public String convertToCSV(String[] data) {
     	return Stream.of(data).map(this::escapeSpclChars).collect(Collectors.joining(","));
     }

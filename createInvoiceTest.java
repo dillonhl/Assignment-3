@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 
 class createInvoiceTest {
 
-	Store_System system = new Store_System();
+	//Store_System system = new Store_System();
 	int num_of_custs = 5;
 	int num_of_salesppl = 2;
+
 	@Test
-	void test() {
+	void test1_validEntry1() {
 		try {
-			//Store_System system = new Store_System();
 			Customer cust = new Customer(2);
 			Salesperson salesprsn = new Salesperson(1);
 			LinkedHashMap<Product, Integer> ordered_products_1 = new LinkedHashMap<>();
@@ -23,19 +23,17 @@ class createInvoiceTest {
 			ordered_products_1.put(new Product(1005), 3);
 			ordered_products_1.put(new Product(1006), 1);
 			InvoiceCreator invce_crtr = new InvoiceCreator();
-			Invoice invoice = invce_crtr.createInvoice(1, cust, salesprsn, ordered_products_1, 1);
-			//System.out.println()
+			Invoice invoice = invce_crtr.createInvoice(cust, salesprsn, ordered_products_1, 1);			
 			invoice.printInvoice();
-			//Save invoice, update sales and inventory, record commission for salesperson, etc.
-			system.saveInvoice(invoice);
+			invoice.saveInvoice();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	
 	@Test
-	void test2() {
+	void test2_validEntry2() {
 		try {
 			//Store_System system = new Store_System();
 			Customer cust2 = new Customer(1);
@@ -44,15 +42,15 @@ class createInvoiceTest {
 			ordered_products_2.put(new Product(1004), 6);
 			ordered_products_2.put(new Product(1003), 3);
 			InvoiceCreator invce_crtr = new InvoiceCreator();
-			Invoice invoice2 = invce_crtr.createInvoice(2, cust2, salesprsn2, ordered_products_2, 0);
+			//Invoice invoice2 = invce_crtr.createInvoice(2, cust2, salesprsn2, ordered_products_2, 0);
+			Invoice invoice2 = invce_crtr.createInvoice(cust2, salesprsn2, ordered_products_2, 0);
 			invoice2.printInvoice();
-			system.saveInvoice(invoice2);
+			invoice2.saveInvoice();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
+	/*
 	@Test
 	void test3_TooBigOfAnOrder() {
 		try {
@@ -112,5 +110,5 @@ class createInvoiceTest {
 		}catch (Exception e) {
 			System.out.println("Error: "+ e);
 		}
-	}
+	} */
 }

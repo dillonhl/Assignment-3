@@ -5,6 +5,7 @@ import java.lang.System;
 
 public class Invoice {
     int invoice_id;
+ //   private static AtomicInteger invoice_counter = new AtomicInteger(10000);
     Date invoice_creation_date;
     Date invoice_closed_date;
     int salesperson_id;
@@ -23,17 +24,24 @@ public class Invoice {
     float discount; 
     float finance_charge;
     
-    Invoice(int invoice_id, Customer cust, Salesperson salesprsn, LinkedHashMap<Product,Integer> product_orders, int delivery) {
-    	this.invoice_id = invoice_id;
+	String ordered_product;
+	String all_ordered_products = "||";
+	int ordered_product_ProductID;
+	String ordered_product_SerialNumber;
+	String ordered_product_ProductName;
+	float ordered_product_SellingPrice;
+	float ordered_product_TotalPrice;
+
+	Invoice(Customer cust, Salesperson salesprsn, LinkedHashMap<Product,Integer> product_orders, int delivery) {
     	this.invoice_creation_date = new Date();
     	this.invoice_closed_date = null;
     	this.salesperson_id = salesprsn.salesperson_id;
     	this.salesperson_name = salesprsn.salesperson_name;
     	this.customer_id = cust.customer_id;
-    	//Look up customer CSV table w ID to fill in name, address, phone #, and sales tax %.
     	this.customer_name = cust.customer_name;
     	this.customer_address = cust.customer_address;
     	this.cust_sales_tax_percent = cust.sales_tax;
+    	this.invoice_id = this.invoice_creation_date.hashCode() + this.customer_id;
     	
     	this.ordered_products = product_orders;
     	for (Integer orderedQty : this.ordered_products.values()) {
@@ -46,33 +54,7 @@ public class Invoice {
     	calc_amounts(delivery);
     }
 
-    //I'm not sure if this method is even necessary anymore.
-    void addProduct(int productID, int quantity_ordered){
-
-    }
-
-    void displayQuantityErrorMessage(){
-
-    }
-
-    void displayProductByWarehouse(int productID){
-
-    }
-
-    void selectQtyFromWarehouse(int warehouse_num, int productID, int quantity){
-
-    }
-
-    void applySalesTax(){
-
-    }
-
-    void addDeliveryCharge(float deliveryCharge){
-
-    }
-
     void printInvoice(){
-    	//System.out.println("Our invoices's Working Directory = " + System.getProperty("user.dir"));
     	System.out.println("Invoice ID: " + this.invoice_id);
     	System.out.println("Date: " + this.invoice_creation_date);
     	System.out.println("Customer ID: " + this.customer_id + 
@@ -80,7 +62,6 @@ public class Invoice {
     						", Address = " + this.customer_address + 
     						", Sales Tax % = " + this.cust_sales_tax_percent + "%");
     	System.out.println("Salesperson ID: " + this.salesperson_id + ", Name: " + this.salesperson_name);
-    	//System.out.println(this.ordered_products);
     	for(Map.Entry<Product, Integer> entry : this.ordered_products.entrySet()) {
     		Product product = entry.getKey();
     		int ordered_quantity = entry.getValue();
@@ -89,7 +70,20 @@ public class Invoice {
        						 + "Ordered Quantity = %2d, Total Price = $%4.2f] \n",product.product_ID,
        						    product.serial_number, product.product_name, product.selling_price,
        						    ordered_quantity, (product.selling_price * ordered_quantity));
-       		//this.pretax_sales_total += (product.selling_price * ordered_quantity);
+
+			ordered_product_ProductID = product.product_ID;
+			ordered_product_SerialNumber = product.serial_number;
+			ordered_product_ProductName = product.product_name;
+			ordered_product_SellingPrice = product.selling_price;
+			ordered_product_TotalPrice = product.selling_price * ordered_quantity;
+			
+			ordered_product = "[Product ID = " + ordered_product_ProductID + " " + 
+								"Serial Number = " + ordered_product_SerialNumber + " " +
+								"Product Name = " + ordered_product_ProductName + " " +
+								"Selling Price = " + ordered_product_SellingPrice + " " +
+								"Ordered Quantity = " + ordered_quantity + " " +
+								"Total Price = $" + ordered_product_TotalPrice + "]";
+			all_ordered_products = all_ordered_products + "\t" + ordered_product + "||";
     	}
     	System.out.printf("Total Quantity Ordered = %2d \n", this.totalQuantityOrdered);
     	System.out.printf("Pre-tax Sales Total = $%4.2f \n", this.pretax_sales_total);
@@ -100,13 +94,11 @@ public class Invoice {
 
     
     void saveInvoice(){
-    		// Added by EM
-    		try {
-        		// Added by EM
+    		try {    			
         		FileWriter fw = new FileWriter("Invoice_List.csv", true);
         		BufferedWriter bw = new BufferedWriter(fw);
         		PrintWriter pw = new PrintWriter(bw);
-        		
+
         		pw.println(String.valueOf(this.invoice_id) + "," +
         				String.valueOf(this.invoice_creation_date) + "," +
         				String.valueOf(this.invoice_closed_date) + "," +
@@ -116,7 +108,7 @@ public class Invoice {
         			    this.customer_name + "," +
         			    this.customer_address + "," +
         			    String.valueOf(this.cust_sales_tax_percent) + "," +
-        			    String.valueOf(this.ordered_products) + "," +
+        			    String.valueOf(this.all_ordered_products) + "," +
         			    String.valueOf(this.totalQuantityOrdered) + "," +
         			    String.valueOf(this.pretax_sales_total) + "," +
         			    String.valueOf(this.sales_tax_amount) + "," +
@@ -131,35 +123,11 @@ public class Invoice {
         		System.out.println("Invoice saved.");  	
     		}
     		catch (Exception e) {
-    			System.out.println("ERROR!");
+    			System.out.println("ERROR! - File is open.");
     		}
 
     }
-    /*
-    float calcCommission(){
 
-    }
-
-    void updateInvoice(float payment){
-        
-    }
-
-    void closeInvoice(){
-
-    }
-
-    void addDiscount(){
-
-    }
-/*
-    Date getInvoiceClosedData(){
-
-    }
-*/
-    void addFinanceCharge(float financeCharge){
-        
-    }
-    
     void calc_amounts(int delivery) {
     	for(Map.Entry<Product, Integer> entry : this.ordered_products.entrySet()) {
     		Product product = entry.getKey();
@@ -172,20 +140,4 @@ public class Invoice {
     	}
     	this.total_amount = this.pretax_sales_total + this.sales_tax_amount + this.delivery_charge;
     }
-    /*
-    private String[] find_info(String csv_file_dir) {
-    	try {
-    		String line = ""; String splitBy = ",";
-			BufferedReader br = new BufferedReader(new FileReader(csv));
-			br.readLine();
-			while ((line = br.readLine()) != null){  
-				String[] info = line.split(splitBy);
-			}
-			br.close();
-			return product
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    } */
 }

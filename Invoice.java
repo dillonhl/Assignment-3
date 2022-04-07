@@ -98,16 +98,48 @@ public class Invoice {
     	System.out.printf("Total Amount = $%4.2f \n \n", this.total_amount);
     }
 
-    /*
-    void saveInvoice(){
     
+    void saveInvoice(){
+    		// Added by EM
+    		try {
+        		// Added by EM
+        		FileWriter fw = new FileWriter("Invoice_List.csv", true);
+        		BufferedWriter bw = new BufferedWriter(fw);
+        		PrintWriter pw = new PrintWriter(bw);
+        		
+        		pw.println(String.valueOf(this.invoice_id) + "," +
+        				String.valueOf(this.invoice_creation_date) + "," +
+        				String.valueOf(this.invoice_closed_date) + "," +
+        			    String.valueOf(this.salesperson_id) + "," +
+        			    this.salesperson_name + "," +
+        			    String.valueOf(this.customer_id) + "," +
+        			    this.customer_name + "," +
+        			    this.customer_address + "," +
+        			    String.valueOf(this.cust_sales_tax_percent) + "," +
+        			    String.valueOf(this.ordered_products) + "," +
+        			    String.valueOf(this.totalQuantityOrdered) + "," +
+        			    String.valueOf(this.pretax_sales_total) + "," +
+        			    String.valueOf(this.sales_tax_amount) + "," +
+        			    String.valueOf(this.delivery_charge) + "," +
+        			    String.valueOf(this.total_amount) + "," +
+        			    String.valueOf(this.remaining_balance) + "," +
+        			    String.valueOf(this.discount) + "," +
+        			    String.valueOf(this.finance_charge));    
+        		
+        		pw.flush();
+        		pw.close();
+        		System.out.println("Invoice saved.");  	
+    		}
+    		catch (Exception e) {
+    			System.out.println("ERROR!");
+    		}
 
     }
-    
+    /*
     float calcCommission(){
 
     }
-*/
+
     void updateInvoice(float payment){
         
     }

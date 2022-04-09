@@ -1,11 +1,1 @@
 Invoice ID,Invoice Creation Date,Invoice Closed Date,Salesperson ID,Salesperson Name,Customer ID,Customer Name,Customer Address,Customer Sales Tax %,Ordered Products,Total Quantity,Pretax Sales Total,Sales Tax Amount,Delivery Charge,Total Amount,Remaining Balance,Discount,Finance Charge
-197191996,Fri Apr 08 17:37:13 PDT 2022,null,2,Jill Lawrence,1,Meiling Gonzalez,5555 Campo Walk; Long Beach; CA; 90803,10.5,||,9,1800.0,189.0,0.0,1989.0,0.0,0.0,0.0
-197191858,Fri Apr 08 17:37:13 PDT 2022,null,1,Andy Maher,2,Justin Marsh,8989 Speilberg Ave; Hollywood; CA; 90028,9.5,||,15,5630.0,534.85,5.0,6169.85,0.0,0.0,0.0
-197217024,Fri Apr 08 17:37:38 PDT 2022,null,2,Jill Lawrence,1,Meiling Gonzalez,5555 Campo Walk; Long Beach; CA; 90803,10.5,||,9,1800.0,189.0,0.0,1989.0,0.0,0.0,0.0
-197217675,Fri Apr 08 17:37:38 PDT 2022,null,1,Andy Maher,2,Justin Marsh,8989 Speilberg Ave; Hollywood; CA; 90028,9.5,||,15,5630.0,534.85,5.0,6169.85,0.0,0.0,0.0
-197248311,Fri Apr 08 17:38:09 PDT 2022,null,2,Jill Lawrence,1,Meiling Gonzalez,5555 Campo Walk; Long Beach; CA; 90803,10.5,||,9,1800.0,189.0,0.0,1989.0,0.0,0.0,0.0
-197248179,Fri Apr 08 17:38:09 PDT 2022,null,1,Andy Maher,2,Justin Marsh,8989 Speilberg Ave; Hollywood; CA; 90028,9.5,||,15,5630.0,534.85,5.0,6169.85,0.0,0.0,0.0
-197356635,Fri Apr 08 17:39:58 PDT 2022,null,2,Jill Lawrence,1,Meiling Gonzalez,5555 Campo Walk; Long Beach; CA; 90803,10.5,||,9,1800.0,189.0,0.0,1989.0,0.0,0.0,0.0
-197357517,Fri Apr 08 17:39:58 PDT 2022,null,1,Andy Maher,2,Justin Marsh,8989 Speilberg Ave; Hollywood; CA; 90028,9.5,||,15,5630.0,534.85,5.0,6169.85,0.0,0.0,0.0
-197575594,Fri Apr 08 17:43:36 PDT 2022,null,2,Jill Lawrence,1,Meiling Gonzalez,5555 Campo Walk; Long Beach; CA; 90803,10.5,||,9,1800.0,189.0,0.0,1989.0,0.0,0.0,0.0
-197575511,Fri Apr 08 17:43:37 PDT 2022,null,1,Andy Maher,2,Justin Marsh,8989 Speilberg Ave; Hollywood; CA; 90028,9.5,||,15,5630.0,534.85,5.0,6169.85,0.0,0.0,0.0

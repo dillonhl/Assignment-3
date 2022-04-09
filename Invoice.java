@@ -22,14 +22,8 @@ public class Invoice {
     float remaining_balance;
     float discount; 
     float finance_charge;
-	String ordered_product;
 	String all_ordered_products = "||";
-	int ordered_product_ProductID;
-	String ordered_product_SerialNumber;
-	String ordered_product_ProductName;
-	float ordered_product_SellingPrice;
-	float ordered_product_TotalPrice;
-
+	
 	Invoice(Customer cust, Salesperson salesprsn, LinkedHashMap<Product,Integer> product_orders, int delivery) {
     	this.invoice_creation_date = new Date();
     	this.invoice_closed_date = null;
@@ -51,46 +45,29 @@ public class Invoice {
     	calc_amounts(delivery);
     }
 
-    void printInvoice(){
-    	System.out.println("Invoice ID: " + this.invoice_id);
-    	System.out.println("Date: " + this.invoice_creation_date);
-    	System.out.println("Customer ID: " + this.customer_id + 
-    						", Name: " + this.customer_name + 
-    						", Address = " + this.customer_address + 
-    						", Sales Tax % = " + this.cust_sales_tax_percent + "%");
-    	System.out.println("Salesperson ID: " + this.salesperson_id + ", Name: " + this.salesperson_name);
+    void saveProductListString(){
     	for(Map.Entry<Product, Integer> entry : this.ordered_products.entrySet()) {
     		Product product = entry.getKey();
     		int ordered_quantity = entry.getValue();
-       		System.out.printf("Product [ID = %2d, Serial Number = %9s, "
-       						 + "Name = %13s, Selling Price = $%3.2f, "
-       						 + "Ordered Quantity = %2d, Total Price = $%4.2f] \n",product.product_ID,
-       						    product.serial_number, product.product_name, product.selling_price,
-       						    ordered_quantity, (product.selling_price * ordered_quantity));
-
-			ordered_product_ProductID = product.product_ID;
-			ordered_product_SerialNumber = product.serial_number;
-			ordered_product_ProductName = product.product_name;
-			ordered_product_SellingPrice = product.selling_price;
-			ordered_product_TotalPrice = product.selling_price * ordered_quantity;			
-			ordered_product = "[Product ID = " + ordered_product_ProductID + " " + 
-								"Serial Number = " + ordered_product_SerialNumber + " " +
-								"Product Name = " + ordered_product_ProductName + " " +
-								"Selling Price = " + ordered_product_SellingPrice + " " +
-								"Ordered Quantity = " + ordered_quantity + " " +
+       		int ordered_product_ProductID = product.product_ID;
+			String ordered_product_SerialNumber = product.serial_number;
+			String ordered_product_ProductName = product.product_name;
+			Float ordered_product_SellingPrice = product.selling_price;
+			Float ordered_product_TotalPrice = product.selling_price * ordered_quantity;			
+			String ordered_product = "[Product ID = " + ordered_product_ProductID + "; " + 
+								"Serial Number = " + ordered_product_SerialNumber + "; " +
+								"Product Name = " + ordered_product_ProductName + "; " +
+								"Selling Price = " + ordered_product_SellingPrice + "; " +
+								"Ordered Quantity = " + ordered_quantity + "; " +
 								"Total Price = $" + ordered_product_TotalPrice + "]";
 			all_ordered_products = all_ordered_products + "\t" + ordered_product + "||";
     	}
-    	System.out.printf("Total Quantity Ordered = %2d \n", this.totalQuantityOrdered);
-    	System.out.printf("Pre-tax Sales Total = $%4.2f \n", this.pretax_sales_total);
-    	System.out.printf("Sales Tax (%2.1f%%) = $%4.2f \n", this.cust_sales_tax_percent, this.sales_tax_amount);
-    	System.out.printf("Delivery fee = $%2.2f \n", this.delivery_charge);
-    	System.out.printf("Total Amount = $%4.2f \n \n", this.total_amount);
     }
 
     
     void saveInvoice(){
-    		try {    			
+    		try {
+    			saveProductListString();
         		FileWriter fw = new FileWriter("Invoice_List.csv", true);
         		BufferedWriter bw = new BufferedWriter(fw);
         		PrintWriter pw = new PrintWriter(bw);
@@ -103,6 +80,7 @@ public class Invoice {
         			    this.customer_name + "," +
         			    this.customer_address + "," +
         			    String.valueOf(this.cust_sales_tax_percent) + "," +
+        			    //String.valueOf(this.ordered_products) + "," +
         			    String.valueOf(this.all_ordered_products) + "," +
         			    String.valueOf(this.totalQuantityOrdered) + "," +
         			    String.valueOf(this.pretax_sales_total) + "," +
@@ -112,7 +90,6 @@ public class Invoice {
         			    String.valueOf(this.remaining_balance) + "," +
         			    String.valueOf(this.discount) + "," +
         			    String.valueOf(this.finance_charge));    
-        		
         		pw.flush();
         		pw.close();
         		System.out.println("Invoice saved.");  	
@@ -120,7 +97,6 @@ public class Invoice {
     		catch (Exception e) {
     			System.out.println("ERROR! - File is open.");
     		}
-
     }
 
     void calc_amounts(int delivery) {

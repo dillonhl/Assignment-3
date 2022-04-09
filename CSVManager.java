@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CSVManager {
+	CSVManager(){
+		
+	}
+	
 	public void displayProducts(){
     	try {
     		String line = "";
@@ -78,10 +82,10 @@ public class CSVManager {
     }
 	
 	public String convertToCSV(String[] data) {
-    	return Stream.of(data).map(this::escapeSpclChars).collect(Collectors.joining(","));
+    	return Stream.of(data).map(this::escapeSpecialCharacters).collect(Collectors.joining(","));
     }
     
-    public String escapeSpclChars(String data) {
+    public String escapeSpecialCharacters(String data) {
     	String escpdData = data.replaceAll("\\R", "");
     	if (data.contains(",") || data.contains("\"") || data.contains("'")) {
     		data = data.replace("\"", "\"\"");

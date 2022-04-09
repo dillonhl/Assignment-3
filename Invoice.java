@@ -22,7 +22,6 @@ public class Invoice {
     float remaining_balance;
     float discount; 
     float finance_charge;
-	String all_ordered_products = "||";
 	
 	Invoice(Customer cust, Salesperson salesprsn, LinkedHashMap<Product,Integer> product_orders, int delivery) {
     	this.invoice_creation_date = new Date();
@@ -45,7 +44,8 @@ public class Invoice {
     	calc_amounts(delivery);
     }
 
-    void saveProductListString(){
+    String saveProductListString(){
+    	String all_ordered_products = "||";
     	for(Map.Entry<Product, Integer> entry : this.ordered_products.entrySet()) {
     		Product product = entry.getKey();
     		int ordered_quantity = entry.getValue();
@@ -62,12 +62,13 @@ public class Invoice {
 								"Total Price = $" + ordered_product_TotalPrice + "]";
 			all_ordered_products = all_ordered_products + "\t" + ordered_product + "||";
     	}
+    	return all_ordered_products;
     }
 
     
     void saveInvoice(){
     		try {
-    			saveProductListString();
+    			String product_list = saveProductListString();
         		FileWriter fw = new FileWriter("Invoice_List.csv", true);
         		BufferedWriter bw = new BufferedWriter(fw);
         		PrintWriter pw = new PrintWriter(bw);
@@ -81,7 +82,7 @@ public class Invoice {
         			    this.customer_address + "," +
         			    String.valueOf(this.cust_sales_tax_percent) + "," +
         			    //String.valueOf(this.ordered_products) + "," +
-        			    String.valueOf(this.all_ordered_products) + "," +
+        			    String.valueOf(product_list) + "," +
         			    String.valueOf(this.totalQuantityOrdered) + "," +
         			    String.valueOf(this.pretax_sales_total) + "," +
         			    String.valueOf(this.sales_tax_amount) + "," +

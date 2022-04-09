@@ -189,6 +189,7 @@ public class Store_System {
 
     }    
 */
+	/* COMMENTED OUT BY ELLIS
     void saveInvoice(Invoice invoice){
     	try {
     		this.invoices.put(invoice.invoice_id, invoice);
@@ -258,14 +259,14 @@ public class Store_System {
     		float sale_commission = invoice.pretax_sales_total * (salesprsn.commission_rate/100);
     		salesprsn.addCommission(invoice.invoice_id, sale_commission);
     		System.out.println(salesprsn);
-    		*/
+    		
     		fstream.close();
     		//out.close();
     	}	catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
+    } */
 /*
     ArrayList<Product> find_products(String search_term) {
     	ArrayList<Product> found_product_list = new ArrayList<Product>();

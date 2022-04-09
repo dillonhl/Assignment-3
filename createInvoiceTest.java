@@ -44,7 +44,6 @@ class createInvoiceTest {
 			InvoiceCreator invce_crtr = new InvoiceCreator();
 			//Invoice invoice2 = invce_crtr.createInvoice(2, cust2, salesprsn2, ordered_products_2, 0);
 			Invoice invoice2 = invce_crtr.createInvoice(cust2, salesprsn2, ordered_products_2, 0);
-			//invoice2.printInvoice();
 			invoice2.saveInvoice();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,9 +59,6 @@ class createInvoiceTest {
 			ordered_products_3.put(new Product(1001), 4);
 			InvoiceCreator invce_crtr = new InvoiceCreator();
 			assertThrows(ExcsveQtyException.class, ()->{Invoice invoice3 = invce_crtr.createInvoice(cust3, salesprsn3, ordered_products_3, 1);});
-
-			//invoice3.printInvoice();
-			//system.saveInvoice(invoice3);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

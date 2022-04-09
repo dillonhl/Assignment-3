@@ -18,10 +18,8 @@ public class Salesperson {
    			String line = ""; String splitBy = ",";
    			BufferedReader br = new BufferedReader(new FileReader("Salesperson_List.csv"));
    			br.readLine();
-   			//List<String> found_product = Collections.emptyList();
    			while ((line = br.readLine()) != null){  
   				searched_salesprsn = line.split(splitBy);
-   				//System.out.println("Product [ID = " + product[0] + ", Name = " + product[1] + "]");
    				if (Integer.parseInt(searched_salesprsn[0]) == salesprsn_id) {
    					this.salesperson_name = searched_salesprsn[1];
    					this.commission_rate = Float.parseFloat(searched_salesprsn[2]);
@@ -33,49 +31,17 @@ public class Salesperson {
    				throw new SalesprsnNotFoundExcptn(String.format("Salesperson # %2d could not be found. Pls find another one.", salesprsn_id));
    			}
    			br.close();
-   			//return found_product;
    			} catch (Exception e) {
-   				// TODO Auto-generated catch block
    				System.out.println("Error: " + e);
    				throw e;
    			}
    		this.commissionsToPay = new LinkedHashMap<Integer,Float>();
    	}
-   	/*
-	int getID(){
-   		return salesperson_id;
-   	}
 
-   	float getCommissionRate(){
-       	return commission_rate;
-   	}
-
-   	void setCommissionRate(float commission)
-   	{
-       	commission_rate = commission;
-   	}
-
-   	void checkOffCommission(int invoice_id){
-
-    }
-	
-/*
-   	HashMap<int,float> getCommissionsToPay(){
-
-    }
-
-   	float getCommissionEarned(){
-       	return total_commission_earned;
-   	}
-*/
    	void addSalesMade(float sale){
        	this.total_sales_made += sale;
    	}
-/*
-   	float getTotalSalesMade() {
 
-    }
-*/
    	void addCommission(int invoice_id, float sale_commission){
    		this.commissionsToPay.put(invoice_id, sale_commission);
    		this.total_commission_earned += sale_commission;

@@ -8,16 +8,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CSVManager {
-	CSVManager() {
-		
-	}
-	
 	public void displayProducts(){
     	try {
     		String line = "";
     		String splitBy = ",";
-   			BufferedReader br = new BufferedReader(new FileReader("Product_List.csv"));    
-   			//reads one line at a time  
+   			BufferedReader br = new BufferedReader(new FileReader("Product_List.csv"));
    			br.readLine();
    			while ((line = br.readLine()) != null){  
    				int product_id = Integer.parseInt(line.split(splitBy)[0]);
@@ -25,7 +20,6 @@ public class CSVManager {
    				System.out.println(product);
    			}
     	} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
@@ -49,15 +43,11 @@ public class CSVManager {
     			    "Ordered Products", "Total Quantity", "Pretax Sales Total", 
     			    "Sales Tax Amount", "Delivery Charge", "Total Amount", 
     			    "Remaining Balance", "Discount", "Finance Charge"};
-    		//(String.format("%2d, %2d/%2d/%4d, %2d/%2d/%4d, ") invoice.invoice_id, invoice.invoice_creation_date, invoice.invoice_closed_date);
     		String invoice_str = convertToCSV(invoice_hdrs);
-    		//(String.format("%2d, %2d/%2d/%4d, %2d/%2d/%4d, ") invoice.invoice_id, invoice.invoice_creation_date, invoice.invoice_closed_date);
-    		//csvWriter.writeNext(invoice_set);
     		invceInit.write(invoice_str);
     		invceInit.println();
     		invceInit.close();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
@@ -82,7 +72,6 @@ public class CSVManager {
 			}
 			br.close();
     	} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return found_product_list;

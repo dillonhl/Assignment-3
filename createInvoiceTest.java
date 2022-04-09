@@ -24,7 +24,7 @@ class createInvoiceTest {
 			ordered_products_1.put(new Product(1006), 1);
 			InvoiceCreator invce_crtr = new InvoiceCreator();
 			Invoice invoice = invce_crtr.createInvoice(cust, salesprsn, ordered_products_1, 1);			
-			invoice.printInvoice();
+			//invoice.printInvoice();
 			invoice.saveInvoice();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -44,13 +44,13 @@ class createInvoiceTest {
 			InvoiceCreator invce_crtr = new InvoiceCreator();
 			//Invoice invoice2 = invce_crtr.createInvoice(2, cust2, salesprsn2, ordered_products_2, 0);
 			Invoice invoice2 = invce_crtr.createInvoice(cust2, salesprsn2, ordered_products_2, 0);
-			invoice2.printInvoice();
+			//invoice2.printInvoice();
 			invoice2.saveInvoice();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	/*
+	
 	@Test
 	void test3_TooBigOfAnOrder() {
 		try {
@@ -59,7 +59,7 @@ class createInvoiceTest {
 			LinkedHashMap<Product, Integer> ordered_products_3 = new LinkedHashMap<>();
 			ordered_products_3.put(new Product(1001), 4);
 			InvoiceCreator invce_crtr = new InvoiceCreator();
-			assertThrows(ExcsveQtyException.class, ()->{Invoice invoice3 = invce_crtr.createInvoice(2, cust3, salesprsn3, ordered_products_3, 1);});
+			assertThrows(ExcsveQtyException.class, ()->{Invoice invoice3 = invce_crtr.createInvoice(cust3, salesprsn3, ordered_products_3, 1);});
 
 			//invoice3.printInvoice();
 			//system.saveInvoice(invoice3);
@@ -77,7 +77,7 @@ class createInvoiceTest {
 			LinkedHashMap<Product, Integer> ordered_products_4 = new LinkedHashMap<>();
 			ordered_products_4.put(new Product(1002), -4);
 			InvoiceCreator invce_crtr = new InvoiceCreator();
-			assertThrows(NegQtyException.class, ()->{Invoice invoice4 = invce_crtr.createInvoice(2, cust4, salesprsn4, ordered_products_4, 0);});
+			assertThrows(NegQtyException.class, ()->{Invoice invoice4 = invce_crtr.createInvoice(cust4, salesprsn4, ordered_products_4, 0);});
 			//invoice4.printInvoice();
 			//system.saveInvoice(invoice4);
 		}catch (Exception e) {
@@ -110,5 +110,5 @@ class createInvoiceTest {
 		}catch (Exception e) {
 			System.out.println("Error: "+ e);
 		}
-	} */
+	} 
 }

@@ -5,7 +5,6 @@ import java.lang.System;
 
 public class Invoice {
     int invoice_id;
- //   private static AtomicInteger invoice_counter = new AtomicInteger(10000);
     Date invoice_creation_date;
     Date invoice_closed_date;
     int salesperson_id;
@@ -23,7 +22,6 @@ public class Invoice {
     float remaining_balance;
     float discount; 
     float finance_charge;
-    
 	String ordered_product;
 	String all_ordered_products = "||";
 	int ordered_product_ProductID;
@@ -42,7 +40,6 @@ public class Invoice {
     	this.customer_address = cust.customer_address;
     	this.cust_sales_tax_percent = cust.sales_tax;
     	this.invoice_id = this.invoice_creation_date.hashCode() + this.customer_id;
-    	
     	this.ordered_products = product_orders;
     	for (Integer orderedQty : this.ordered_products.values()) {
     		this.totalQuantityOrdered += orderedQty;
@@ -75,8 +72,7 @@ public class Invoice {
 			ordered_product_SerialNumber = product.serial_number;
 			ordered_product_ProductName = product.product_name;
 			ordered_product_SellingPrice = product.selling_price;
-			ordered_product_TotalPrice = product.selling_price * ordered_quantity;
-			
+			ordered_product_TotalPrice = product.selling_price * ordered_quantity;			
 			ordered_product = "[Product ID = " + ordered_product_ProductID + " " + 
 								"Serial Number = " + ordered_product_SerialNumber + " " +
 								"Product Name = " + ordered_product_ProductName + " " +
@@ -98,7 +94,6 @@ public class Invoice {
         		FileWriter fw = new FileWriter("Invoice_List.csv", true);
         		BufferedWriter bw = new BufferedWriter(fw);
         		PrintWriter pw = new PrintWriter(bw);
-
         		pw.println(String.valueOf(this.invoice_id) + "," +
         				String.valueOf(this.invoice_creation_date) + "," +
         				String.valueOf(this.invoice_closed_date) + "," +

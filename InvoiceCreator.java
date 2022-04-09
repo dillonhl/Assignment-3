@@ -19,12 +19,10 @@ public final class InvoiceCreator {
     	try {
 			qty_chkr.qtyChk(ordered_products);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			System.out.println("Error: " + e);
 			throw e;
 		}    	
     	Invoice invoice = new Invoice(customer, salesperson, ordered_products, delivery);
-    	//Invoice creation will also calculate more attributes for invoice, like total amount.
     	return invoice;
     }
 }

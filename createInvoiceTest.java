@@ -2,7 +2,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.*;
 
-import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 public class createInvoiceTest {
 
@@ -11,7 +12,7 @@ public class createInvoiceTest {
 	int num_of_salesppl = 2;
 
 	@Test
-	void test1_validEntry1() {
+	public void test1_validEntry1() {
 		try {
 			Customer cust = new Customer(2);
 			Salesperson salesprsn = new Salesperson(1);
@@ -33,7 +34,7 @@ public class createInvoiceTest {
 
 	
 	@Test
-	void test2_validEntry2() {
+	public void test2_validEntry2() {
 		try {
 			//Store_System system = new Store_System();
 			Customer cust2 = new Customer(1);
@@ -51,7 +52,7 @@ public class createInvoiceTest {
 	}
 	
 	@Test
-	void test3_TooBigOfAnOrder() {
+	public void test3_TooBigOfAnOrder() {
 		try {
 			Customer cust3 = new Customer(3);
 			Salesperson salesprsn3 = new Salesperson(1);
@@ -66,7 +67,7 @@ public class createInvoiceTest {
 	}
 	
 	@Test
-	void test4_NegativeOrder() {
+	public void test4_NegativeOrder() {
 		try {
 			Customer cust4 = new Customer(4);
 			Salesperson salesprsn4 = new Salesperson(2);
@@ -82,7 +83,7 @@ public class createInvoiceTest {
 	}
 	
 	@Test
-	void test5_invalid_cust() {
+	public void test5_invalid_cust() {
 		try {
 			assertThrows(CustNotFoundExcptn.class, ()->{Customer cust5 = new Customer(10);});
 		}catch (Exception e) {
@@ -91,7 +92,7 @@ public class createInvoiceTest {
 	}
 	
 	@Test
-	void test6_invalid_salesprsn() {
+	public void test6_invalid_salesprsn() {
 		try {
 			assertThrows(SalesprsnNotFoundExcptn.class, ()->{Salesperson salesprsn5 = new Salesperson(7);});
 		}catch (Exception e) {
@@ -100,7 +101,7 @@ public class createInvoiceTest {
 	}
 
 	@Test
-	void test7_invalid_product() {
+	public void test7_invalid_product() {
 		try {
 			assertThrows(ProductNotFoundException.class, ()->{Product product11 = new Product(1234);});
 		}catch (Exception e) {

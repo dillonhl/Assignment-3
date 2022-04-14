@@ -1,0 +1,25 @@
+To test our software, pls run the createInvoiceTest by running this line on command line:
+C:\Users\mslaw\.p2\pool\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_16.0.1.v20210528-1205\jre\bin\javaw.exe
+-ea
+-Dfile.encoding=UTF-8
+-p "C:\Users\mslaw\OneDrive\Documents\University Documents\CSULB Documents\CSULB CECS Files\CECS 543 Software Engineering\Assignments\Assignment 3\Assignment-3 Github Folder\lib\commons-csv-1.9.0.jar;C:\Users\mslaw\OneDrive\Documents\University Documents\CSULB Documents\CSULB CECS Files\CECS 543 Software Engineering\Assignments\Assignment 3\Assignment-3 Github Folder\lib\opencsv-3.8.jar"
+-classpath "C:\Users\mslaw\OneDrive\Documents\University Documents\CSULB Documents\CSULB CECS Files\CECS 543 Software Engineering\Assignments\Assignment 3\Assignment-3 Github Folder;C:\Users\mslaw\.p2\pool\plugins\org.junit.jupiter.api_5.8.1.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.junit.jupiter.engine_5.8.1.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.junit.jupiter.migrationsupport_5.8.1.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.junit.jupiter.params_5.8.1.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.junit.platform.commons_1.8.1.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.junit.platform.engine_1.8.1.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.junit.platform.launcher_1.8.1.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.junit.platform.runner_1.8.1.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.junit.platform.suite.api_1.8.1.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.junit.platform.suite.engine_1.8.1.v20211028-1957.jar;C:\Users\mslaw\.p2\pool\plugins\org.junit.platform.suite.commons_1.8.1.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.junit.vintage.engine_5.8.1.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.opentest4j_1.2.0.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.apiguardian_1.1.2.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.junit_4.13.2.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.hamcrest.core_1.3.0.v20180420-1519.jar;C:\Users\mslaw\eclipse\java-2022-03\eclipse\configuration\org.eclipse.osgi\224\0\.cp;C:\Users\mslaw\eclipse\java-2022-03\eclipse\configuration\org.eclipse.osgi\222\0\.cp"
+-XX:+ShowCodeDetailsInExceptionMessages org.eclipse.jdt.internal.junit.runner.RemoteTestRunner
+-version 3
+-port 52277
+-testLoaderClass org.eclipse.jdt.internal.junit5.runner.JUnit5TestLoader
+-loaderpluginname org.eclipse.jdt.junit5.runtime
+-classNames createInvoiceTest
+
+Also, please run the InventoryLookupTest by running this line on command line:
+C:\Users\mslaw\.p2\pool\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_16.0.1.v20210528-1205\jre\bin\javaw.exe
+-ea
+-Dfile.encoding=UTF-8
+-p "C:\Users\mslaw\OneDrive\Documents\University Documents\CSULB Documents\CSULB CECS Files\CECS 543 Software Engineering\Assignments\Assignment 3\Assignment-3 Github Folder\lib\commons-csv-1.9.0.jar;C:\Users\mslaw\OneDrive\Documents\University Documents\CSULB Documents\CSULB CECS Files\CECS 543 Software Engineering\Assignments\Assignment 3\Assignment-3 Github Folder\lib\opencsv-3.8.jar"
+-classpath "C:\Users\mslaw\OneDrive\Documents\University Documents\CSULB Documents\CSULB CECS Files\CECS 543 Software Engineering\Assignments\Assignment 3\Assignment-3 Github Folder;C:\Users\mslaw\.p2\pool\plugins\org.junit.jupiter.api_5.8.1.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.junit.jupiter.engine_5.8.1.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.junit.jupiter.migrationsupport_5.8.1.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.junit.jupiter.params_5.8.1.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.junit.platform.commons_1.8.1.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.junit.platform.engine_1.8.1.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.junit.platform.launcher_1.8.1.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.junit.platform.runner_1.8.1.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.junit.platform.suite.api_1.8.1.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.junit.platform.suite.engine_1.8.1.v20211028-1957.jar;C:\Users\mslaw\.p2\pool\plugins\org.junit.platform.suite.commons_1.8.1.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.junit.vintage.engine_5.8.1.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.opentest4j_1.2.0.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.apiguardian_1.1.2.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.junit_4.13.2.v20211018-1956.jar;C:\Users\mslaw\.p2\pool\plugins\org.hamcrest.core_1.3.0.v20180420-1519.jar;C:\Users\mslaw\eclipse\java-2022-03\eclipse\configuration\org.eclipse.osgi\224\0\.cp;C:\Users\mslaw\eclipse\java-2022-03\eclipse\configuration\org.eclipse.osgi\222\0\.cp"
+-XX:+ShowCodeDetailsInExceptionMessages org.eclipse.jdt.internal.junit.runner.RemoteTestRunner
+-version 3
+-port 58536
+-testLoaderClass org.eclipse.jdt.internal.junit5.runner.JUnit5TestLoader
+-loaderpluginname org.eclipse.jdt.junit5.runtime
+-classNames InventoryLookupTest

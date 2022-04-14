@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import junit.runner.Version;
 
-class InventoryLookupTest {
+public class InventoryLookupTest {
 	@Test
 	void findOtherExistingValues() {
 		Store_System system = new Store_System();

@@ -1,10 +1,10 @@
-import org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.*;
 
 import org.junit.jupiter.api.Test;
 
-class createInvoiceTest {
+public class createInvoiceTest {
 
 	//Store_System system = new Store_System();
 	int num_of_custs = 5;

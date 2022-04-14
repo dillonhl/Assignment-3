@@ -9,13 +9,14 @@ import java.util.Scanner;
 */
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import junit.runner.Version;
 
-class InventoryLookupTest {
+public class InventoryLookupTest {
 	@Test
-	void findOtherExistingValues() {
+	public void findOtherExistingValues() {
 		Store_System system = new Store_System();
 		String search_term = "900";
 		ArrayList<Product> found_prdcts = system.findProducts(search_term);
@@ -23,7 +24,7 @@ class InventoryLookupTest {
 	}	
 	
 	@Test
-	void findNonExistingValues() {
+	public void findNonExistingValues() {
 		Store_System system = new Store_System();
 		String search_term = "8000";
 		ArrayList<Product> found_prdcts = system.findProducts(search_term);
@@ -31,7 +32,7 @@ class InventoryLookupTest {
 	}	
 	
 	@Test
-	void findExistingProduct() {  
+	public void findExistingProduct() {  
 		Store_System system = new Store_System();
 		String search_term = "Sony";
 		ArrayList<Product> found_prdcts = system.findProducts(search_term);
@@ -39,7 +40,7 @@ class InventoryLookupTest {
 	}
 	
 	@Test
-	void findNonExistingProduct() {
+	public void findNonExistingProduct() {
 		Store_System system = new Store_System();
 		String search_term = "Disney";
 		ArrayList<Product> found_prdcts = system.findProducts(search_term);
